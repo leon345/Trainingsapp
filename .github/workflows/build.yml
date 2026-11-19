@@ -37,9 +37,11 @@ jobs:
           context: server
           file: server/Dockerfile
           push: true
+          labels: |
+            org.opencontainers.image.source=https://github.com/leon345/Trainingsapp
           tags: |
-            ghcr.io/leon345/trainingsapp-server:${{ github.sha }}
-            ghcr.io/leon345/trainingsapp-server:gemini
+            ghcr.io/leon345/trainingsapp/server:${{ github.sha }}
+            ghcr.io/leon345/trainingsapp/server:gemini
 
   client:
     runs-on: ubuntu-latest
@@ -70,9 +72,11 @@ jobs:
           context: client
           file: client/Dockerfile
           push: true
+          labels: |
+            org.opencontainers.image.source=https://github.com/leon345/Trainingsapp
           tags: |
-            ghcr.io/leon345/trainingsapp-client:${{ github.sha }}
-            ghcr.io/leon345/trainingsapp-client:gemini
+            ghcr.io/leon345/trainingsapp/client:${{ github.sha }}
+            ghcr.io/leon345/trainingsapp/client:gemini
 
   helm-chart:
     needs: [server, client]

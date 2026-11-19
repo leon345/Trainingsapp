@@ -2,7 +2,7 @@ imagePullSecrets: []
 
 client:
   image:
-    repository: ghcr.io/leon345/trainingsapp-client
+    repository: ghcr.io/leon345/trainingsapp/client
     tag: gemini
     pullPolicy: IfNotPresent
   replicaCount: 1
@@ -15,7 +15,7 @@ client:
 
 server:
   image:
-    repository: ghcr.io/leon345/trainingsapp-server
+    repository: ghcr.io/leon345/trainingsapp/server
     tag: gemini
     pullPolicy: IfNotPresent
   replicaCount: 1
