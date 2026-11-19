@@ -15,9 +15,9 @@ Abschließende Verifikation aller Sicherheits-, ArchUnit-, DSGVO- und Betriebsan
 
 1. **Vollständige Security- & `%prod`-Härtungs-Tests:**
    - `%prod`-Profil-Testmatrix:
-     - Alle `/q/openapi`, `/q/swagger-ui`, `/q/health` (auf Hauptport), `/q/webauthn/*` sind im `%prod`-Profil nicht erreichbar (Quarkus-Bordmittel, kein Leak/Body/`Set-Cookie`); Health läuft auf dem Management-Port.
+     - Alle `/q/openapi`, `/q/swagger-ui`, `/q/health` (auf Hauptport) über Quarkus-Bordmittel sowie `/q/webauthn/*` (via freigegebenem minimalen Vert.x-`@RouteFilter` in `infrastructure.passkey`) sind im `%prod`-Profil gesperrt (`404` bzw. ohne Leak/Body/`Set-Cookie`); Health läuft auf dem Management-Port.
      - Alle `/v1/*`-Routen (inkl. unbekannter Pfade) außer `anmelden*` und `registrieren*` liefern ohne gültige Sitzung `401` als `FehlerV1`-JSON (niemals `302`).
-   - HTTP-Security-Header (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `CSP` via `quarkus.http.header.*`), Cookie-Attribute (`HttpOnly`, `Secure` mit `X-Forwarded-Proto: https`, `SameSite=Strict`), Origin-Allowlist und `@RateLimit` (429) vollständig getestet.
+   - HTTP-Security-Header (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `CSP` via `quarkus.http.header.*`), Cookie-Attribute (`SameSite=Strict`, `Secure` mit `X-Forwarded-Proto: https`; fehlendes `HttpOnly` bei `quarkus-security-webauthn:3.40.1.2` gemäß Nutzerentscheid dokumentiert), Origin-Allowlist und `@RateLimit` (429) vollständig getestet.
    - IDOR-Komplettprüfung über alle Endpunkte (Passkeys, Timer, Workouts, Übungen, Sätze, Einladungen, Profile, DSGVO).
 2. **ArchUnit- & Code-Qualitätsabnahme:**
    - Alle ArchUnit-Regeln (`domain` 100 % framework-frei; `application` ohne JPA/Vert.x/WebAuthn/`SecurityIdentity`; `api.v1` ohne JPA/Vert.x/WebAuthn/`SecurityIdentity`) laufen grün.
