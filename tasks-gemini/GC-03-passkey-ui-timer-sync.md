@@ -2,7 +2,7 @@
 
 - **ID:** `GC-03`
 - **Repo:** `client`
-- **Status:** `offen`
+- **Status:** `in Arbeit`
 - **Abhängigkeiten:** `GC-02`, `GS-02`, `GS-03`
 - **Branch:** `gemini-task/GC-03-passkey-ui-timer-sync`
 - **Worktree:** `.worktrees/gemini-GC-03`

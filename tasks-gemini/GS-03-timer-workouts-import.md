@@ -2,7 +2,7 @@
 
 - **ID:** `GS-03`
 - **Repo:** `server`
-- **Status:** `offen`
+- **Status:** `in Arbeit`
 - **Abhängigkeiten:** `GS-02`
 - **Branch:** `gemini-task/GS-03-timer-workouts-import`
 - **Worktree:** `.worktrees/gemini-GS-03`

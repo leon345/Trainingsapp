@@ -2,7 +2,7 @@
 
 - **ID:** `GS-02`
 - **Repo:** `server`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `server` Branch `gemini`, Commit `851b680`: 62/62 Tests grün inkl. PostgreSQL 18 Dev Services, Flyway V1+V2, ArchUnit 6/6, ES256/RS256/SignCount=0, `@RolesAllowed` + `@PermissionsAllowed`/`@PermissionChecker`, `@RateLimit` 429, `/q/webauthn/*` 404, OpenAPI-Artefakt)
 - **Abhängigkeiten:** `GS-01`
 - **Branch:** `gemini-task/GS-02-passkeys-rbac-abac`
 - **Worktree:** `.worktrees/gemini-GS-02`
