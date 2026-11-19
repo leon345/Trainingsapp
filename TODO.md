@@ -10,27 +10,6 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ---
 
-## Pause & Wiedereinstieg (Stand 19.11.2026, ~15:15 Uhr)
-
-- **Projekt sauber pausiert** (keine laufenden Hintergrund-Tasks oder aktiven Subagents).
-- **Bereits komplett abgeschlossen & auf `gemini` gemergt (Wellen 1–3, 6 von 10 Tasks = 60 %):**
-  - **Server (`server/` Branch `gemini` @ `ee83330`, 77/77 Tests grün mit PostgreSQL 18 Dev Services):**
-    - `GS-01` (Grundgerüst, DDD/ArchUnit, Flyway V1, OpenAPI, Security-Header-Bordmittel, Management-Health)
-    - `GS-02` (Passkeys via `quarkus-security-webauthn`, dünner Auth-Port `Anmeldesitzung`, RBAC/ABAC mit `@Authenticated`/`@RolesAllowed`/`@PermissionsAllowed` + `@PermissionChecker`, `@RateLimit` via `quarkus-smallrye-fault-tolerance`, `/q/webauthn/*` -> `404`)
-    - `GS-03` (Timer-API `GET/PUT /v1/timer/einstellung`, Kraft- & Calisthenics-Workouts `/v1/workouts` inkl. ABAC/IDOR & optimistischer Sperre `409`, interner Port `WorkoutImport` + `docs/erweiterungen.md`)
-  - **Client (`client/` Branch `gemini` @ `da1c041`, Vitest 91/91 grün, Playwright 63 grün in 4 Browsern + `visuell-chromium`):**
-    - `GC-01` (React 19, Vite, PWA, `@mui/material` mit Material-3-Expressive-Theme, `react-router`, `openapi-typescript`/`openapi-fetch`, Formatierer)
-    - `GC-02` (Zeitstempel-Intervalltimer, Wake Lock, Phasensignale mit Web-Audio-Sinusgenerator & `navigator.vibrate`, getrennte Schalter)
-    - `GC-03` (Passkey-Registrierung/Anmeldung/Verwaltung inkl. 2.-Passkey-Hinweis, Umbenennen, Löschen mit Schutz des letzten Passkeys, Server-Timer-Sync, vorbereitetes `e2e-integration/fullstack.spec.ts`)
-- **Zwischenstand Welle 4 (pausiert wegen Modell-Quota, alle Teilarbeiten in den Worktrees gesichert):**
-  - **`GS-04`** (Worktree `.worktrees/gemini-GS-04`, Branch `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen`): Uncommittete Teilarbeit vorhanden (`V4__einladungen_dsgvo.sql`, `WorkoutEinladung*`-Domäne/Entity/Service/Resource, `benutzer`-Suche, `profil`-Endpunkt). Noch fertigzustellen: DSGVO-Export (`/v1/dsgvo/export`), Kontolöschung (`DELETE /v1/konto`), `quarkus-scheduler`-Aufräumjob und Integrationstests.
-  - **`GC-04`** (Worktree `.worktrees/gemini-GC-04`, Branch `gemini-task/GC-04-workout-tracking-ui`): Commit `4b20e9a` (`GS-03`-OpenAPI-Schema übernommen & Typen generiert) + uncommittete Teilarbeit in `src/workouts/`. Noch fertigzustellen: Workout-UI (`/workouts`, `/workouts/neu`, `/workouts/:id`), Vitest-Tests und Playwright-E2E/Snapshots.
-- **Nächste Schritte beim Wiedereinstieg (`agy -c`):**
-  1. **Welle 4 abschließen:** Worker für `GS-04` (in `.worktrees/gemini-GS-04`) und `GC-04` (in `.worktrees/gemini-GC-04`) fortsetzen und nach Grün auf `gemini` mergen.
-  2. **Welle 5 (`GS-05` ∥ `GC-05`) + Fullstack-E2E:** Security-/IDOR-Matrix & Betriebsdoku (`GS-05`) sowie Sichtbarkeit-/Einladen-/DSGVO-UI (`GC-05`) umsetzen und abschließend `npm run test:e2e:integration` gegen den laufenden Quarkus-Server ausführen.
-
----
-
 ## Verbindliche Leitregel (19.11.2026)
 
 - **Standard-Packages vor Eigenentwicklung:** Für alles außerhalb der eigentlichen Business-Logik (Infrastruktur, Security-Plumbing, Transaktionen, Rate-Limiting, UI-Bibliothek, Routing, API-Client) werden vorrangig offizielle Framework-Bordmittel und Standard-Packages genutzt. Jede geplante Eigenentwicklung außerhalb der Business-Logik **MUSS** vor der Umsetzung dem Nutzer vorgestellt und freigegeben werden.
@@ -49,10 +28,10 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
    - `GS-03` (`GET`/`PUT /v1/timer/einstellung`, Kraft- & Calisthenics-Workouts, interner Port `WorkoutImport`) — **`erledigt`** (Fast-Forward in `server` `gemini` `ee83330`, 77/77 Tests grün inkl. PostgreSQL Dev Services, Flyway V1–V3, Hibernate `validate`, ArchUnit 6/6, ABAC/IDOR + `409`, `docs/erweiterungen.md`)
    - `GC-03` (Passkey-Registrierung/Anmeldung/Verwaltung & Server-Timer-Sync + Fullstack-E2E) — **`erledigt`** (Fast-Forward in `client` `gemini` `da1c041`, Vitest 91/91, Playwright 63 bestanden / 2 erwartete CDP-Skips in Firefox/WebKit / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler; Fullstack-E2E-Setup `e2e-integration/fullstack.spec.ts` angelegt, Live-Lauf folgt nach Server-Maven-Tasks)
 4. **Welle 4 – Sichtbarkeit/DSGVO/Aufräumjob (Server):**
-   - `GS-04` (Workout-Sichtbarkeit, Einladungen, Profile, DSGVO-Export & -Löschung, `quarkus-scheduler`-Aufräumjob) — **`in Arbeit`** (nach `GS-03`)
+   - `GS-04` (Workout-Sichtbarkeit, Einladungen, Profile, DSGVO-Export & -Löschung, `quarkus-scheduler`-Aufräumjob) — **`erledigt`** (Fast-Forward in `server` `gemini` `14cb127`, 80/80 Tests grün inkl. PostgreSQL 18 Dev Services, Flyway V1–V4, ABAC-Matrix, DSGVO-Export & Kontolöschung, `quarkus-scheduler`-Aufräumjob, ArchUnit 6/6, OpenAPI 64 KB)
 5. **Welle 5 – Workout-UI, Sichtbarkeit/DSGVO-UI, Sicherheitstests & Gesamtabnahme:**
-   - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`offen`** (nach `GS-04`)
-   - `GC-04` (Workout- & Calisthenics-Tracking-UI + Fullstack-E2E) — **`in Arbeit`** (nach `GC-03`, `GS-03`)
+   - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`in Arbeit`** (nach `GS-04`)
+   - `GC-04` (Workout- & Calisthenics-Tracking-UI + Fullstack-E2E) — **`in Arbeit`** (nach `GC-03`, `GS-03`, läuft parallel in `.worktrees/gemini-GC-04`)
    - `GC-05` (Sichtbarkeit/Einladungen/Profile-UI, DSGVO-Export/Löschung/PoC-Hinweis, Cross-Browser- & Fullstack-E2E-Abnahme) — **`offen`** (nach `GC-04`, `GS-04`)
 
 ---
@@ -64,8 +43,8 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 | `GS-01` | Server-Grundgerüst (Quarkus 3.40.1.2, DDD/ArchUnit, PostgreSQL/Flyway, OpenAPI, Bordmittel) | `server` | `erledigt` | – | `gemini-task/GS-01-server-grundgeruest` / `.worktrees/gemini-GS-01` (`2667e8e`, in `gemini`) | [GS-01](tasks-gemini/GS-01-server-grundgeruest.md) |
 | `GS-02` | Passkeys (`quarkus-security-webauthn`), Auth-Port, RBAC/ABAC & `@RateLimit` | `server` | `erledigt` | `GS-01` | `gemini-task/GS-02-passkeys-rbac-abac` / `.worktrees/gemini-GS-02` (`851b680`, in `gemini`) | [GS-02](tasks-gemini/GS-02-passkeys-rbac-abac.md) |
 | `GS-03` | Timer-API, Workout-/Calisthenics-Tracking & `WorkoutImport`-Port | `server` | `erledigt` | `GS-02` | `gemini-task/GS-03-timer-workouts-import` / `.worktrees/gemini-GS-03` (`ee83330`, in `gemini`) | [GS-03](tasks-gemini/GS-03-timer-workouts-import.md) |
-| `GS-04` | Workout-Sichtbarkeit, Einladungen, DSGVO-Export/Löschung & `quarkus-scheduler`-Aufräumjob | `server` | `in Arbeit` | `GS-03` | `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` / `.worktrees/gemini-GS-04` | [GS-04](tasks-gemini/GS-04-sichtbarkeit-dsgvo-aufraeumen.md) |
-| `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `offen` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
+| `GS-04` | Workout-Sichtbarkeit, Einladungen, DSGVO-Export/Löschung & `quarkus-scheduler`-Aufräumjob | `server` | `erledigt` | `GS-03` | `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` / `.worktrees/gemini-GS-04` (`14cb127`, in `gemini`) | [GS-04](tasks-gemini/GS-04-sichtbarkeit-dsgvo-aufraeumen.md) |
+| `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `in Arbeit` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
 | `GC-01` | Client-Grundgerüst (React 19, Vite, PWA, MUI M3 Expressive, `react-router`, `openapi-fetch`, Tests) | `client` | `erledigt` | – | `gemini-task/GC-01-client-grundgeruest` / `.worktrees/gemini-GC-01` (`68ebe3a`, in `gemini`) | [GC-01](tasks-gemini/GC-01-client-grundgeruest-design.md) |
 | `GC-02` | Intervalltimer & Phasensignale (Ton, Vibration, `aria-live`, Zeitstempel) | `client` | `erledigt` | `GC-01` | `gemini-task/GC-02-timer-phasensignale` / `.worktrees/gemini-GC-02` (`6381298`, in `gemini`) | [GC-02](tasks-gemini/GC-02-timer-phasensignale.md) |
 | `GC-03` | Passkey-UI, Passkey-Verwaltung & Server-Timer-Sync (+ Fullstack-E2E) | `client` | `erledigt` | `GC-02`, `GS-02`, `GS-03` | `gemini-task/GC-03-passkey-ui-timer-sync` / `.worktrees/gemini-GC-03` (`da1c041`, in `gemini`) | [GC-03](tasks-gemini/GC-03-passkey-ui-timer-sync.md) |
@@ -79,20 +58,21 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ## Aktueller Git-Stand (Branch `gemini`)
 
-- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `c9a882f`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
+- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `f61ee78`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
 - **Server (`server/`):**
-  - Branch `gemini`: `ee83330` (`feat(GS-03): Interner WorkoutImport-Port und Erweiterungsdokumentation` — enthält `GS-01`, `GS-02` und `GS-03` per Fast-Forward).
+  - Branch `gemini`: `14cb127` (`test(GS-04): ABAC-Matrix-, DSGVO-, Aufräumjob- & OpenAPI-Integrationstests` — enthält `GS-01`, `GS-02`, `GS-03` und `GS-04` per Fast-Forward).
   - Worktree `.worktrees/gemini-GS-01`: Branch `gemini-task/GS-01-server-grundgeruest` auf `2667e8e` (`GS-01` erledigt).
   - Worktree `.worktrees/gemini-GS-02`: Branch `gemini-task/GS-02-passkeys-rbac-abac` auf `851b680` (`GS-02` erledigt).
   - Worktree `.worktrees/gemini-GS-03`: Branch `gemini-task/GS-03-timer-workouts-import` auf `ee83330` (`GS-03` erledigt, 77/77 Tests grün inkl. PostgreSQL Dev Services, Flyway V1–V3, Hibernate `validate`, ArchUnit 6/6).
-  - Worktree `.worktrees/gemini-GS-04`: Branch `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` auf `ee83330` (`GS-04` in Arbeit).
+  - Worktree `.worktrees/gemini-GS-04`: Branch `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` auf `14cb127` (`GS-04` erledigt, 80/80 Tests grün inkl. PostgreSQL 18 Dev Services, Flyway V1–V4, ABAC-Matrix, DSGVO-Export & Kontolöschung, `quarkus-scheduler`-Aufräumjob, ArchUnit 6/6, OpenAPI 64 KB).
+  - Worktree `.worktrees/gemini-GS-05`: Branch `gemini-task/GS-05-sicherheitstests-doku` auf `14cb127` (`GS-05` in Arbeit).
   - Altbestand: `main` (`e65d322`), `integration/server` (`9535788`) unverändert.
 - **Client (`client/`):**
   - Branch `gemini`: `da1c041` (`GC-03: Fullstack-Integrationstest-Setup fuer Quarkus-Server vorbereitet` — enthält `GC-01`, `GC-02` und `GC-03` per Fast-Forward).
   - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `68ebe3a` (`GC-01` erledigt).
   - Worktree `.worktrees/gemini-GC-02`: Branch `gemini-task/GC-02-timer-phasensignale` auf `6381298` (`GC-02` erledigt).
   - Worktree `.worktrees/gemini-GC-03`: Branch `gemini-task/GC-03-passkey-ui-timer-sync` auf `da1c041` (`GC-03` erledigt, Vitest 91/91, Playwright 63 bestanden / 2 erwartete CDP-Skips in Firefox/WebKit / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler; Live-Lauf `e2e-integration/fullstack.spec.ts` folgt nach Server-Maven-Tasks).
-  - Worktree `.worktrees/gemini-GC-04`: Branch `gemini-task/GC-04-workout-tracking-ui` auf `da1c041` (`GC-04` in Arbeit).
+  - Worktree `.worktrees/gemini-GC-04`: Branch `gemini-task/GC-04-workout-tracking-ui` (`GC-04` parallel in Arbeit).
   - Altbestand: `main` (`149134c`) und alte `task/*`-Worktrees unverändert.
 
 ---
