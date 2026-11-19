@@ -32,7 +32,7 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 5. **Welle 5 – Workout-UI, Sichtbarkeit/DSGVO-UI, Sicherheitstests & Gesamtabnahme:**
    - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`erledigt`** (Fast-Forward in `server` `gemini` `76eb297`, `mvn clean verify` 124/124 Tests grün, 0 Fehler, 0 übersprungen, inkl. 42 `%prod`-Sicherheitsmatrix-Tests, kompletter IDOR-Matrix, ArchUnit 7/7 über alle 26 Pakete, `docs/dsgvo-tom.md`, `docs/betrieb.md`, `docs/prototyp-lokal.md`, `scripts/smoke-check.sh` Exit 0 — damit alle 5 Server-Tasks `GS-01`–`GS-05` 100 % abgeschlossen)
    - `GC-04` (Workout- & Calisthenics-Tracking-UI + Fullstack-E2E) — **`erledigt`** (Fast-Forward in `client` `gemini` `7a88f73`, Vitest 107/107 grün, Playwright 83 grün / 2 erwartete CDP-Skips / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler)
-   - `GC-05` (Sichtbarkeit/Einladungen/Profile-UI, DSGVO-Export/Löschung/PoC-Hinweis, Cross-Browser- & Fullstack-E2E-Abnahme) — **`in Arbeit`** (nach `GC-04`, `GS-04`; im Anschluss folgt der Live-Fullstack-E2E-Lauf `npm run test:e2e:integration`)
+   - `GC-05` (Sichtbarkeit/Einladungen/Profile-UI, DSGVO-Export/Löschung/PoC-Hinweis, Cross-Browser- & Fullstack-E2E-Abnahme) — **`erledigt`** (in `client` `gemini` `ab6793d`, Vitest 118/118, Playwright 103 grün / 2 erwartete CDP-Skips / 0 Fehler, `npm audit --omit=dev` 0 Schwachstellen, **Live-Fullstack-E2E gegen echten Quarkus-Server 2/2 grün in 9,9 s**)
 
 ---
 
@@ -49,7 +49,7 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 | `GC-02` | Intervalltimer & Phasensignale (Ton, Vibration, `aria-live`, Zeitstempel) | `client` | `erledigt` | `GC-01` | `gemini-task/GC-02-timer-phasensignale` / `.worktrees/gemini-GC-02` (`6381298`, in `gemini`) | [GC-02](tasks-gemini/GC-02-timer-phasensignale.md) |
 | `GC-03` | Passkey-UI, Passkey-Verwaltung & Server-Timer-Sync (+ Fullstack-E2E) | `client` | `erledigt` | `GC-02`, `GS-02`, `GS-03` | `gemini-task/GC-03-passkey-ui-timer-sync` / `.worktrees/gemini-GC-03` (`da1c041`, in `gemini`) | [GC-03](tasks-gemini/GC-03-passkey-ui-timer-sync.md) |
 | `GC-04` | Workout- & Calisthenics-Tracking-UI (+ Fullstack-E2E) | `client` | `erledigt` | `GC-03`, `GS-03` | `gemini-task/GC-04-workout-tracking-ui` / `.worktrees/gemini-GC-04` (`7a88f73`, in `gemini`) | [GC-04](tasks-gemini/GC-04-workout-tracking-ui.md) |
-| `GC-05` | Sichtbarkeit, Einladungen, Profile, DSGVO-UI, PoC-Hinweis & Gesamtabnahme | `client` | `in Arbeit` | `GC-04`, `GS-04` | `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e` / `.worktrees/gemini-GC-05` | [GC-05](tasks-gemini/GC-05-sichtbarkeit-dsgvo-ui-e2e.md) |
+| `GC-05` | Sichtbarkeit, Einladungen, Profile, DSGVO-UI, PoC-Hinweis & Gesamtabnahme | `client` | `erledigt` | `GC-04`, `GS-04` | `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e` / `.worktrees/gemini-GC-05` (`2d3f32c` + Live-Fix `ab6793d` in `gemini`) | [GC-05](tasks-gemini/GC-05-sichtbarkeit-dsgvo-ui-e2e.md) |
 
 ### Nicht umgesetzter Wunsch-/Alt-Scope (Nutzerentscheide A, B, G, I)
 - Zurückgestellt bzw. abgewählt: `S-09`/`C-12` (Schwimm-Workouts), `S-10`/`C-13` (Apple Health Adapter/Plugin), `S-11` (Mitnutzer-Rechte), `S-15` (Registrierungscode/`max-benutzer`), `C-10` (Desktop-Tastenkürzel/Shneiderman), `C-11` (Capacitor), `C-15` (Native Passkeys).
@@ -68,12 +68,12 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
   - Worktree `.worktrees/gemini-GS-05`: Branch `gemini-task/GS-05-sicherheitstests-doku` auf `76eb297` (`GS-05` erledigt, `mvn clean verify` 124/124 Tests grün, 0 Fehler, 0 übersprungen, inkl. 42 `%prod`-Sicherheitsmatrix-Tests, kompletter IDOR-Matrix, ArchUnit 7/7 über alle 26 Pakete, `docs/dsgvo-tom.md`, `docs/betrieb.md`, `docs/prototyp-lokal.md`, `scripts/smoke-check.sh` Exit 0).
   - Altbestand: `main` (`e65d322`), `integration/server` (`9535788`) unverändert.
 - **Client (`client/`):**
-  - Branch `gemini`: `7a88f73` (`e2e: Workout-CRUD-Tests (4 Browser), visuelle Snapshots und Fullstack-Flow ergaenzen` — enthält `GC-01`, `GC-02`, `GC-03` und `GC-04` per Fast-Forward).
+  - Branch `gemini`: `ab6793d` (`fix(GC-05): optionale Jackson-null-Werte bei Workout-Feldern robust behandeln und Fullstack-Locator praezisieren` — enthält `GC-01`–`GC-05` komplett inkl. Live-Fullstack-E2E 2/2 grün).
   - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `68ebe3a` (`GC-01` erledigt).
   - Worktree `.worktrees/gemini-GC-02`: Branch `gemini-task/GC-02-timer-phasensignale` auf `6381298` (`GC-02` erledigt).
-  - Worktree `.worktrees/gemini-GC-03`: Branch `gemini-task/GC-03-passkey-ui-timer-sync` auf `da1c041` (`GC-03` erledigt, Vitest 91/91, Playwright 63 bestanden / 2 erwartete CDP-Skips in Firefox/WebKit / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler; Live-Lauf `e2e-integration/fullstack.spec.ts` folgt nach Server-Maven-Tasks).
+  - Worktree `.worktrees/gemini-GC-03`: Branch `gemini-task/GC-03-passkey-ui-timer-sync` auf `da1c041` (`GC-03` erledigt, Vitest 91/91, Playwright 63 bestanden / 2 erwartete CDP-Skips in Firefox/WebKit / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler).
   - Worktree `.worktrees/gemini-GC-04`: Branch `gemini-task/GC-04-workout-tracking-ui` auf `7a88f73` (`GC-04` erledigt, Vitest 107/107 grün, Playwright 83 grün / 2 erwartete CDP-Skips / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler).
-  - Worktree `.worktrees/gemini-GC-05`: Branch `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e` auf `7a88f73` (`GC-05` in Arbeit).
+  - Worktree `.worktrees/gemini-GC-05`: Branch `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e` auf `2d3f32c` (`GC-05` erledigt; Live-Fullstack-Fix `ab6793d` auf `gemini`, Vitest 118/118, Playwright 103 grün, Live-Fullstack-E2E 2/2 grün, `npm audit --omit=dev` 0 Schwachstellen).
   - Altbestand: `main` (`149134c`) und alte `task/*`-Worktrees unverändert.
 
 ---

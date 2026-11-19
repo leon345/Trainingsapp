@@ -2,7 +2,7 @@
 
 - **ID:** `GC-05`
 - **Repo:** `client`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt`
 - **Abhängigkeiten:** `GC-04`, `GS-04`
 - **Branch:** `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e`
 - **Worktree:** `.worktrees/gemini-GC-05`
