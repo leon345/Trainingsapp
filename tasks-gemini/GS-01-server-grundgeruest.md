@@ -2,7 +2,7 @@
 
 - **ID:** `GS-01`
 - **Repo:** `server`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `server` Branch `gemini`, Commit `2667e8e`: 15/15 Tests grün inkl. PostgreSQL Dev Services, Flyway V1, ArchUnit 6/6, OpenAPI-Artefakt)
 - **Abhängigkeiten:** keine
 - **Branch:** `gemini-task/GS-01-server-grundgeruest`
 - **Worktree:** `.worktrees/gemini-GS-01`

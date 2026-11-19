@@ -19,10 +19,10 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 ## Wellenplan (Wellen 1–5)
 
 1. **Welle 1 – Grundgerüste (parallel):**
-   - `GS-01` (Server-Grundgerüst, Quarkus 3.40.1.2, DDD/ArchUnit, PostgreSQL/Flyway, OpenAPI, Health, Security-Header-Bordmittel) — **`in Arbeit`**
+   - `GS-01` (Server-Grundgerüst, Quarkus 3.40.1.2, DDD/ArchUnit, PostgreSQL/Flyway, OpenAPI, Health, Security-Header-Bordmittel) — **`erledigt`** (Fast-Forward in `server` `gemini` `2667e8e`, 15/15 Tests grün)
    - `GC-01` (Client-Grundgerüst, React 19, Vite, PWA, MUI + Material-3-Expressive-Theme, `react-router`, `openapi-typescript`/`openapi-fetch`, Vitest & Playwright) — **`in Arbeit`**
 2. **Welle 2 – Authentifizierung/RBAC (Server) & Timer/Phasensignale (Client) (parallel):**
-   - `GS-02` (Passkeys via `quarkus-security-webauthn`, dünner Auth-Port, RBAC/ABAC mit `@PermissionsAllowed` + `@PermissionChecker`, `@RateLimit`) — **`offen`** (nach `GS-01`)
+   - `GS-02` (Passkeys via `quarkus-security-webauthn`, dünner Auth-Port, RBAC/ABAC mit `@PermissionsAllowed` + `@PermissionChecker`, `@RateLimit`) — **`in Arbeit`** (nach `GS-01`)
    - `GC-02` (Intervalltimer mit Zeitstempel-Berechnung & Phasensignalen Ton/Vibration/aria-live) — **`offen`** (nach `GC-01`)
 3. **Welle 3 – Timer-Sync-API, Workout-Tracking & Import-Port (Server):**
    - `GS-03` (`GET`/`PUT /v1/timer/einstellung`, Kraft- & Calisthenics-Workouts, interner Port `WorkoutImport`) — **`offen`** (nach `GS-02`)
@@ -40,8 +40,8 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 | ID | Titel | Repo | Status | Abhängigkeiten | Branch / Worktree | Task-Datei |
 |---|---|---|---|---|---|---|
-| `GS-01` | Server-Grundgerüst (Quarkus 3.40.1.2, DDD/ArchUnit, PostgreSQL/Flyway, OpenAPI, Bordmittel) | `server` | `in Arbeit` | – | `gemini-task/GS-01-server-grundgeruest` / `.worktrees/gemini-GS-01` | [GS-01](tasks-gemini/GS-01-server-grundgeruest.md) |
-| `GS-02` | Passkeys (`quarkus-security-webauthn`), Auth-Port, RBAC/ABAC & `@RateLimit` | `server` | `offen` | `GS-01` | `gemini-task/GS-02-passkeys-rbac-abac` / `.worktrees/gemini-GS-02` | [GS-02](tasks-gemini/GS-02-passkeys-rbac-abac.md) |
+| `GS-01` | Server-Grundgerüst (Quarkus 3.40.1.2, DDD/ArchUnit, PostgreSQL/Flyway, OpenAPI, Bordmittel) | `server` | `erledigt` | – | `gemini-task/GS-01-server-grundgeruest` / `.worktrees/gemini-GS-01` (`2667e8e`, in `gemini`) | [GS-01](tasks-gemini/GS-01-server-grundgeruest.md) |
+| `GS-02` | Passkeys (`quarkus-security-webauthn`), Auth-Port, RBAC/ABAC & `@RateLimit` | `server` | `in Arbeit` | `GS-01` | `gemini-task/GS-02-passkeys-rbac-abac` / `.worktrees/gemini-GS-02` | [GS-02](tasks-gemini/GS-02-passkeys-rbac-abac.md) |
 | `GS-03` | Timer-API, Workout-/Calisthenics-Tracking & `WorkoutImport`-Port | `server` | `offen` | `GS-02` | `gemini-task/GS-03-timer-workouts-import` / `.worktrees/gemini-GS-03` | [GS-03](tasks-gemini/GS-03-timer-workouts-import.md) |
 | `GS-04` | Workout-Sichtbarkeit, Einladungen, DSGVO-Export/Löschung & `quarkus-scheduler`-Aufräumjob | `server` | `offen` | `GS-03` | `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` / `.worktrees/gemini-GS-04` | [GS-04](tasks-gemini/GS-04-sichtbarkeit-dsgvo-aufraeumen.md) |
 | `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `offen` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
@@ -58,14 +58,15 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ## Aktueller Git-Stand (Branch `gemini`)
 
-- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `9be040d`, wird mit Setup von `tasks-gemini/`, `TODO.md` und `AGENTS.md` aktualisiert). `main` bleibt auf `9be040d`.
+- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `c608b66`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
 - **Server (`server/`):**
-  - Branch `gemini`: `9174743` (`docs: DDD/Layered Architecture verbindlich und Nutzung von Quarkus-Packages (WebAuthn, Annotationen)`).
-  - Worktree `.worktrees/gemini-GS-01`: Branch `gemini-task/GS-01-server-grundgeruest` auf `9174743` (sauber, in Arbeit).
+  - Branch `gemini`: `2667e8e` (`docs: API-Konventionen und Build-/Test-Hinweise ergaenzen` — enthält `GS-01` per Fast-Forward).
+  - Worktree `.worktrees/gemini-GS-01`: Branch `gemini-task/GS-01-server-grundgeruest` auf `2667e8e` (`GS-01` erledigt, 15/15 Tests grün inkl. PostgreSQL Dev Services, Flyway V1, ArchUnit 6/6, OpenAPI-Artefakt).
+  - Worktree `.worktrees/gemini-GS-02`: Branch `gemini-task/GS-02-passkeys-rbac-abac` auf `2667e8e` (`GS-02` in Arbeit).
   - Altbestand: `main` (`e65d322`), `integration/server` (`9535788`) unverändert.
 - **Client (`client/`):**
   - Branch `gemini`: `09b600e` (`chore: Deployment-Dateien (Dockerfile, nginx, Helm-Chart, Workflow) aus main uebernehmen`).
-  - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `09b600e` (sauber, in Arbeit).
+  - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `a3632e3` (`feat(app): Anwendungsrahmen mit react-router, MUI-Navigation und persistentem Timer-Bereich`, in Arbeit).
   - Altbestand: `main` (`149134c`) und alte `task/*`-Worktrees unverändert.
 
 ---

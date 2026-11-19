@@ -2,7 +2,7 @@
 
 - **ID:** `GS-02`
 - **Repo:** `server`
-- **Status:** `offen`
+- **Status:** `in Arbeit`
 - **Abhängigkeiten:** `GS-01`
 - **Branch:** `gemini-task/GS-02-passkeys-rbac-abac`
 - **Worktree:** `.worktrees/gemini-GS-02`
