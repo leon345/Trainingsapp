@@ -30,9 +30,9 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 4. **Welle 4 – Sichtbarkeit/DSGVO/Aufräumjob (Server):**
    - `GS-04` (Workout-Sichtbarkeit, Einladungen, Profile, DSGVO-Export & -Löschung, `quarkus-scheduler`-Aufräumjob) — **`erledigt`** (Fast-Forward in `server` `gemini` `14cb127`, 80/80 Tests grün inkl. PostgreSQL 18 Dev Services, Flyway V1–V4, ABAC-Matrix, DSGVO-Export & Kontolöschung, `quarkus-scheduler`-Aufräumjob, ArchUnit 6/6, OpenAPI 64 KB)
 5. **Welle 5 – Workout-UI, Sichtbarkeit/DSGVO-UI, Sicherheitstests & Gesamtabnahme:**
-   - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`in Arbeit`** (nach `GS-04`)
+   - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`erledigt`** (Fast-Forward in `server` `gemini` `76eb297`, `mvn clean verify` 124/124 Tests grün, 0 Fehler, 0 übersprungen, inkl. 42 `%prod`-Sicherheitsmatrix-Tests, kompletter IDOR-Matrix, ArchUnit 7/7 über alle 26 Pakete, `docs/dsgvo-tom.md`, `docs/betrieb.md`, `docs/prototyp-lokal.md`, `scripts/smoke-check.sh` Exit 0 — damit alle 5 Server-Tasks `GS-01`–`GS-05` 100 % abgeschlossen)
    - `GC-04` (Workout- & Calisthenics-Tracking-UI + Fullstack-E2E) — **`erledigt`** (Fast-Forward in `client` `gemini` `7a88f73`, Vitest 107/107 grün, Playwright 83 grün / 2 erwartete CDP-Skips / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler)
-   - `GC-05` (Sichtbarkeit/Einladungen/Profile-UI, DSGVO-Export/Löschung/PoC-Hinweis, Cross-Browser- & Fullstack-E2E-Abnahme) — **`in Arbeit`** (nach `GC-04`, `GS-04`)
+   - `GC-05` (Sichtbarkeit/Einladungen/Profile-UI, DSGVO-Export/Löschung/PoC-Hinweis, Cross-Browser- & Fullstack-E2E-Abnahme) — **`in Arbeit`** (nach `GC-04`, `GS-04`; im Anschluss folgt der Live-Fullstack-E2E-Lauf `npm run test:e2e:integration`)
 
 ---
 
@@ -44,7 +44,7 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 | `GS-02` | Passkeys (`quarkus-security-webauthn`), Auth-Port, RBAC/ABAC & `@RateLimit` | `server` | `erledigt` | `GS-01` | `gemini-task/GS-02-passkeys-rbac-abac` / `.worktrees/gemini-GS-02` (`851b680`, in `gemini`) | [GS-02](tasks-gemini/GS-02-passkeys-rbac-abac.md) |
 | `GS-03` | Timer-API, Workout-/Calisthenics-Tracking & `WorkoutImport`-Port | `server` | `erledigt` | `GS-02` | `gemini-task/GS-03-timer-workouts-import` / `.worktrees/gemini-GS-03` (`ee83330`, in `gemini`) | [GS-03](tasks-gemini/GS-03-timer-workouts-import.md) |
 | `GS-04` | Workout-Sichtbarkeit, Einladungen, DSGVO-Export/Löschung & `quarkus-scheduler`-Aufräumjob | `server` | `erledigt` | `GS-03` | `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` / `.worktrees/gemini-GS-04` (`14cb127`, in `gemini`) | [GS-04](tasks-gemini/GS-04-sichtbarkeit-dsgvo-aufraeumen.md) |
-| `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `in Arbeit` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
+| `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `erledigt` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` (`76eb297`, in `gemini`) | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
 | `GC-01` | Client-Grundgerüst (React 19, Vite, PWA, MUI M3 Expressive, `react-router`, `openapi-fetch`, Tests) | `client` | `erledigt` | – | `gemini-task/GC-01-client-grundgeruest` / `.worktrees/gemini-GC-01` (`68ebe3a`, in `gemini`) | [GC-01](tasks-gemini/GC-01-client-grundgeruest-design.md) |
 | `GC-02` | Intervalltimer & Phasensignale (Ton, Vibration, `aria-live`, Zeitstempel) | `client` | `erledigt` | `GC-01` | `gemini-task/GC-02-timer-phasensignale` / `.worktrees/gemini-GC-02` (`6381298`, in `gemini`) | [GC-02](tasks-gemini/GC-02-timer-phasensignale.md) |
 | `GC-03` | Passkey-UI, Passkey-Verwaltung & Server-Timer-Sync (+ Fullstack-E2E) | `client` | `erledigt` | `GC-02`, `GS-02`, `GS-03` | `gemini-task/GC-03-passkey-ui-timer-sync` / `.worktrees/gemini-GC-03` (`da1c041`, in `gemini`) | [GC-03](tasks-gemini/GC-03-passkey-ui-timer-sync.md) |
@@ -58,14 +58,14 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ## Aktueller Git-Stand (Branch `gemini`)
 
-- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `7ff503b`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
+- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `c4b0604`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
 - **Server (`server/`):**
-  - Branch `gemini`: `14cb127` (`test(GS-04): ABAC-Matrix-, DSGVO-, Aufräumjob- & OpenAPI-Integrationstests` — enthält `GS-01`, `GS-02`, `GS-03` und `GS-04` per Fast-Forward).
+  - Branch `gemini`: `76eb297` (`docs(GS-05): DSGVO-/TOM-, Betriebs-, Lokalstart-Doku, README & Smoke-Check-Skript` — enthält `GS-01`–`GS-05` komplett per Fast-Forward).
   - Worktree `.worktrees/gemini-GS-01`: Branch `gemini-task/GS-01-server-grundgeruest` auf `2667e8e` (`GS-01` erledigt).
   - Worktree `.worktrees/gemini-GS-02`: Branch `gemini-task/GS-02-passkeys-rbac-abac` auf `851b680` (`GS-02` erledigt).
   - Worktree `.worktrees/gemini-GS-03`: Branch `gemini-task/GS-03-timer-workouts-import` auf `ee83330` (`GS-03` erledigt, 77/77 Tests grün inkl. PostgreSQL Dev Services, Flyway V1–V3, Hibernate `validate`, ArchUnit 6/6).
   - Worktree `.worktrees/gemini-GS-04`: Branch `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` auf `14cb127` (`GS-04` erledigt, 80/80 Tests grün inkl. PostgreSQL 18 Dev Services, Flyway V1–V4, ABAC-Matrix, DSGVO-Export & Kontolöschung, `quarkus-scheduler`-Aufräumjob, ArchUnit 6/6, OpenAPI 64 KB).
-  - Worktree `.worktrees/gemini-GS-05`: Branch `gemini-task/GS-05-sicherheitstests-doku` auf `14cb127` (`GS-05` in Arbeit).
+  - Worktree `.worktrees/gemini-GS-05`: Branch `gemini-task/GS-05-sicherheitstests-doku` auf `76eb297` (`GS-05` erledigt, `mvn clean verify` 124/124 Tests grün, 0 Fehler, 0 übersprungen, inkl. 42 `%prod`-Sicherheitsmatrix-Tests, kompletter IDOR-Matrix, ArchUnit 7/7 über alle 26 Pakete, `docs/dsgvo-tom.md`, `docs/betrieb.md`, `docs/prototyp-lokal.md`, `scripts/smoke-check.sh` Exit 0).
   - Altbestand: `main` (`e65d322`), `integration/server` (`9535788`) unverändert.
 - **Client (`client/`):**
   - Branch `gemini`: `7a88f73` (`e2e: Workout-CRUD-Tests (4 Browser), visuelle Snapshots und Fullstack-Flow ergaenzen` — enthält `GC-01`, `GC-02`, `GC-03` und `GC-04` per Fast-Forward).

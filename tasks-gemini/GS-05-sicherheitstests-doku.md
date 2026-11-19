@@ -2,7 +2,7 @@
 
 - **ID:** `GS-05`
 - **Repo:** `server`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt`
 - **Abhängigkeiten:** `GS-04`
 - **Branch:** `gemini-task/GS-05-sicherheitstests-doku`
 - **Worktree:** `.worktrees/gemini-GS-05`
