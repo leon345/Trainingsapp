@@ -2,7 +2,7 @@
 
 - **ID:** `GS-04`
 - **Repo:** `server`
-- **Status:** `offen`
+- **Status:** `in Arbeit`
 - **Abhängigkeiten:** `GS-03`
 - **Branch:** `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen`
 - **Worktree:** `.worktrees/gemini-GS-04`

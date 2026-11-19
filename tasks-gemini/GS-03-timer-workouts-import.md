@@ -2,7 +2,7 @@
 
 - **ID:** `GS-03`
 - **Repo:** `server`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `server` Branch `gemini`, Commit `ee83330`: 77/77 Tests grün inkl. PostgreSQL Dev Services, Flyway V1–V3, Hibernate `validate`, ArchUnit 6/6, Timer-API, Workout-/Calisthenics-CRUD + ABAC/IDOR + optimistische Sperre `409`, interner `WorkoutImport`-Port + Teilindex + `docs/erweiterungen.md`)
 - **Abhängigkeiten:** `GS-02`
 - **Branch:** `gemini-task/GS-03-timer-workouts-import`
 - **Worktree:** `.worktrees/gemini-GS-03`
