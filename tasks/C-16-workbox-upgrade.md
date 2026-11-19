@@ -1,0 +1,22 @@
+# C-16 – Workbox-Upgrade mit Test des Service-Worker-Caches
+
+- **Status:** Teil 1 umgesetzt und geprüft, Teil 2 (Upgrade) offen, Merge offen. Branch `task/C-16-workbox-upgrade`, Worktree .worktrees/C-16, Basis 88c13f2, Commits ea7b353 (Tests), d132c60 (`docs/dependency-audit.md`).
+- **Teil 1 (erledigt):** `e2e/service-worker-cache.spec.ts` läuft in allen vier Browser-Projekten gegen den Produktions-Build. Prüft: Precache-Liste entspricht genau den Dateien in `dist/` (ohne `sw.js` und `workbox-*.js`); alle ab `index.html` erreichbaren Dateien stehen in `dist/` und in der Liste; jeder Eintrag existiert mit richtiger Revision; keine Galerie, keine `.map`-Dateien. Nachweis: drei absichtliche Fehlkonfigurationen machten den Test rot (wieder zurückgenommen). Offline-Test grün in chromium, firefox, webkit, mobile: nach Trennen des Netzes startet die App aus dem Service Worker und der Timer läuft.
+- **Einschränkung:** In Firefox liefert die Offline-Emulation weiter aus dem Browser-Cache. Eine fehlende Datei bemerkt dort nur der Cache-Storage-Vergleich, nicht der Neuladen-Teil.
+- **Teil 2 (Upgrade, offen):** Registry-Prüfung am 18.11.2026: `workbox-build` latest 7.4.1 (verlangt `glob ^11.0.1`), `vite-plugin-pwa` latest 2.0.0, `glob` 14.0.6, `minimatch` 11.0.9, `picomatch` 4.0.7. Kein Upgrade möglich, kein Override; `package.json` und Lockfile unverändert. **Wiedervorlage:** Teil 2 nachholen, sobald eine neuere Version von `workbox-build` erscheint. Der Cache-Test steht dafür bereit.
+- **Prüfungen:** Typprüfung, Lint, beide Builds grün; Vitest 175/175; Playwright 164/164 (chromium, firefox, webkit, mobile je 32; galerie-* je 2; visuell-chromium 28); 29 Referenzbilder unverändert; `npm audit` gesamt 14, `--omit=dev` 0.
+- **Ungeprüft:** echte Geräte und echte Offline-Situation; Service-Worker-Updates zwischen zwei Builds.
+- **Repo:** client
+- **Basis:** nach Merge der Client-Kette (C-14, C-06b, C-06)
+- **Ziel:** Die zwei moderaten Meldungen (glob, minimatch über `workbox-build`) beseitigen, sobald ein Workbox-Upgrade ohne Breaking Change verfügbar ist oder der Upgrade-Pfad geprüft ist (E27).
+- **Umfang:**
+  - Upgrade von `workbox-build` bzw. `vite-plugin-pwa` auf eine Version, die `glob` nicht mehr in verwundbarer Version nutzt.
+  - Test des Service-Worker-Caches: Alle Dateien des Produktions-Builds sind in der Precache-Liste; keine fehlenden Einträge (ein stiller Fehler, wie in C-14 beschrieben).
+  - Vitest und funktionale E2E in allen vier Projekten grün; Visualtests nur in Chromium (Nutzerentscheid C).
+  - `npm audit` und `docs/dependency-audit.md` aktualisieren.
+- **Abnahmekriterien:**
+  - Precache-Test prüft Vollständigkeit gegen `dist/` (neuer Test, nicht nur Stichprobe).
+  - Keine `glob`-Meldung mehr oder begründetes Restrisiko mit Datum.
+  - Kein `npm audit fix --force`; Major-Upgrades nur mit Test.
+- **Abhängigkeiten:** C-14, C-06b (Kette).
+- **Quelle:** ENTSCHEIDUNGEN.md E27; `docs/dependency-audit.md`.

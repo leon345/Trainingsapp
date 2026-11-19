@@ -1,0 +1,29 @@
+# S-07 – Sicherheits- und Funktionstests (Server)
+
+- **Status:** offen
+- **Repo:** server
+- **Ziel:** Automatisierte Funktions- und Negativtests für das Backend, laufend mit jeder Funktion.
+- **Betroffene Bereiche:** `src/test` (Unit-, Integrations-, API-Tests), CI-Konfiguration (sofern vorhanden, Frage 4).
+- **Abnahmekriterien:**
+  - Funktionstests: Timer, Workouts, Auth, Sichtbarkeit.
+  - Negativtests:
+    - IDOR: fremde IDs für Workouts, Timer-Einstellung, Profile.
+    - Zugriff ohne Anmeldung auf alle Endpunkte außer Registrieren und Anmelden.
+    - Durchprobieren von Profilen (Rate-Limit, S-06).
+    - ADMIN darf keine fremden Trainingsdaten lesen.
+  - Prod-Profil: kein `/q/*` und kein `/v1/*` ohne Anmeldung erreichbar (E12). Testziel `/v1/info` (E12).
+  - Tests laufen per dokumentiertem Befehl lokal.
+  - Regressionstests aus E14 (Cookie: genau ein `Set-Cookie` je Cookie mit `HttpOnly`, `Secure` (Prod), `SameSite=Strict`; CSP `default-src 'self'`; `X-Forwarded-Proto: https` bei Proxy).
+  - Regressionstests aus E16 (Prod-Profil: 404 ohne Body und ohne `Set-Cookie` für `/q/openapi`, `/q/swagger-ui`, `/q/health`, `/q/webauthn/*`, `/.well-known/webauthn`; 401 JSON für `/v1/*` ohne Anmeldung, nie 302).
+  - Befund-Tests des Passkey-Spikes bleiben dauerhaft (E13).
+  - Datenbank-Tests Pflicht, Standard (E19).
+  - ArchUnit-Regel E26: `jakarta.transaction` nicht in `domain`, `application`, `api.v1`. Schreibmethoden der JPA-Adapter mit `MANDATORY` (Regressionstest).
+  - Benutzernamen-Regeln E28 als Regressionstests (Grenzfälle, Großschreibung, gesperrte Namen).
+  - E30/E31 Freigabeschritte: Smoke-Check-Skript gegen die Live-Domain (HTTPS, HSTS, CSP, Cookie-Attribute, `/q/*` 404, `/v1` ohne Anmeldung 401); OWASP-ZAP-Baseline-Scan ohne hohe Befunde (Kriterien 3 und 8 der Freigabeliste).
+  - E32: Aufräumjob-Tests (S-16) als Regressionstests.
+  - Lücken aus S-04 (Worker, e708fb4): Test für Unicode-Nichtnormalisierung von Benutzernamen; gesperrte Namen über die echte Konfiguration; Tageswechsel `zuletzt_verwendet_am` mit gestellter Uhr; Cookie-Gültigkeit nach Abmelden (Befund).
+  - ArchUnit-Regel (E23, Abnahme 5): in `domain`, `application`, `api.v1` keine Typen aus `io.vertx`, `io.quarkus.security.webauthn`, `SecurityIdentity`.
+  - 401-Tabelle (E25) als Regressionstest: `/v1/info` und alle nicht vorhandenen `/v1/*`-Pfade ohne Anmeldung liefern 401 JSON, nie 302; `anmelden*` und `registrieren*` sind davon ausgenommen.
+- **Abhängigkeiten:** S-01 (laufend), wächst mit S-03, S-04, S-05, S-06.
+- **Quelle:** server/README.md, "Muss-Kriterien" (Sicherheits- und Funktionstests); ENTSCHEIDUNGEN.md E4, E6, E12.
+- **Notiz (aus S-01):** `quarkus-junit5` gilt in Quarkus 3.40 als veraltet und ist in `quarkus-junit` umbenannt. Bei der Testumsetzung berücksichtigen.

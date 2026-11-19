@@ -1,0 +1,22 @@
+# C-06b – `galerie.html` nur im Test-Build (E24)
+
+- **Status:** umgesetzt und geprüft, Merge offen. Branch `task/C-06b-galerie-build-trennung`, Worktree .worktrees/C-06b, Spitze 8a828e3 (Commits 3e82064, bee01e6, b06d217, add63d9, 515e735, 8a828e3), Basis `task/C-14-dependency-audit`. Ergebnis: E24 umgesetzt (Galerie nur im Build `--mode test`; vier Tests je Browser prüfen, dass der Produktions-Build keine Galerie enthält, in Dateien und Precache-Liste; ESLint-Regel `no-restricted-imports`, ESLint neu im Projekt). Nutzerentscheid C umgesetzt (Bildvergleiche nur in `visuell-chromium`, 19/19; 20 Chromium-Referenzbilder unverändert; 20 Firefox-Bilder entfernt; keine für webkit und mobile). Playwright 79/79: funktional gegen den Produktions-Build je 13/13 in chromium, firefox, webkit, mobile; `galerie-*`-Projekte gegen den Test-Build je 2/2. Typprüfung, Lint, beide Builds grün; Vitest 61/61; `npm audit` gesamt 14 unverändert, `--omit=dev` 0. Nacharbeit: "Roboto selbst gehostet" auf `/` gegen den Produktions-Build in allen vier Browsern; neuer Test "Tab setzt Fokus auf den Button" in allen vier Browsern; schwebendes Textfeld-Label funktional in den vier `galerie-`-Projekten. **Ungeprüft:** Tab-Verhalten in echtem Safari auf macOS (Playwright-WebKit verhält sich wie die anderen Browser); bei C-07 notieren. **Aufräumen durch den Nutzer:** `.worktrees/C-06b/dist-alt/` und `.worktrees/C-06b/vite.config.alt.ts` (siehe TODO.md).
+- **Repo:** client
+- **Basis:** Branch des C-14 nach Abschluss (`task/C-14-dependency-audit`), danach Merge-Reihenfolge mit C-06 prüfen.
+- **Ziel:** Die Galerie für die visuellen Tests bleibt nur im Test-Build, damit der Produktions-Build sauber ist (E24).
+- **Umfang:**
+  - `galerie.html` ist nur im Build `vite build --mode test` enthalten. Dieselbe `vite.config`; der Mode fügt ausschließlich den Einstieg hinzu, keine anderen Plugins oder Defines.
+  - Gegen den Produktions-Build (`vite preview`) laufen alle funktionalen E2E-Tests, der Test gegen fremde Hosts und der Service-Worker-Test.
+  - Gegen den Test-Build laufen nur die visuellen Tests der Galerie, und zwar nur in Chromium (Nutzerentscheid C).
+  - Referenzbilder für Firefox werden entfernt; für WebKit und Mobil werden keine erzeugt.
+  - Test: Der Produktions-Build enthält keine `galerie*`-Dateien.
+  - ESLint-Regel `no-restricted-imports`: Die Galerie darf nur Importe aus den Produktionskomponenten nutzen.
+  - ESLint wird als neue Abhängigkeit ergänzt (ändert `package.json`).
+- **Abnahmekriterien:**
+  - Produktions-Build ohne `galerie*`; Test dafür grün.
+  - Funktionale E2E gegen `vite preview` grün in allen vier Projekten (chromium, firefox, webkit, mobile). Auslegung des Orchestrators zu Nutzerentscheid C: Die Vorgabe betrifft nur die visuellen Tests.
+  - Visuelle Tests gegen den Test-Build grün, nur in Chromium (Nutzerentscheid C). Keine Referenzbilder für Firefox, WebKit oder Mobil.
+  - ESLint-Regel aktiv; Lauf ohne Fehler.
+- **Abhängigkeiten:** C-06 (Galerie), C-14 (Abschluss).
+- **Blockiert:** Merge von C-06 (E24 gehört vor den Merge).
+- **Quelle:** ENTSCHEIDUNGEN.md E24; Abweichung B4 (Entry-Flag statt Vite-Modus) abgelehnt.

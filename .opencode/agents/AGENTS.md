@@ -1,0 +1,5 @@
+- Keine neuen Abhängigkeiten ohne Rückfrage beim Orchestrator.
+- Vor einem neuen Helper per Suche prüfen, ob es ihn schon gibt.
+- Keine Abstraktion für nur einen Aufrufer.
+- Tests prüfen Verhalten, nicht die Implementierung.
+- Aufgabe gilt erst als fertig, wenn scripts/verify/<ID>.sh Exit 0 liefert.

@@ -1,0 +1,23 @@
+# S-16 – Täglicher Aufräumjob (E32)
+
+- **Status:** offen
+- **Repo:** server
+- **Ziel:** Abgelaufene ausstehende Registrierungen und Konten ohne Passkey zuverlässig entfernen, ohne inaktive Konten zu löschen.
+- **Umfang:**
+  - Täglicher Job; Zeit über einen Uhr-Port (`Zeit`-Port), damit er testbar ist.
+  - Löschung über den `Transaktion`-Port (E26).
+  - (1) Löscht abgelaufene ausstehende Registrierungen; TTL bleibt bei 10 Minuten.
+  - (2) Löscht Konten mit null Passkeys, deren Anlage mehr als 14 Tage zurückliegt. Sicherheitsnetz, Nutzerwunsch wörtlich umgesetzt.
+  - Inaktive Konten löscht der Job ausdrücklich NICHT.
+  - Protokolliert nur Anzahlen, ohne Personenbezug.
+- **Abnahmekriterien:**
+  - Tests mit Uhr-Fake: abgelaufene Registrierung wird gelöscht, frische nicht.
+  - Konto ohne Passkey nach 14 Tagen wird gelöscht; Konto mit Passkey wird nie gelöscht (auch nicht bei Inaktivität).
+  - Grenzfälle: genau 14 Tage, genau 10 Minuten.
+  - Protokoll enthält nur Zahlen, keine Benutzernamen (Test).
+  - Regel in Datenschutzerklärung und TOM (S-08).
+- **Offene Punkte:**
+  - Löschung inaktiver Konten: erst nach Antwort des Nutzers (Frage 18). Nicht implementieren.
+  - Nach E26 und E3 entsteht ein Konto nicht ohne Passkey; die Regel greift nur in Ausnahmefällen. In "Nächste Council-Runde" aufgenommen.
+- **Abhängigkeiten:** S-04 (Ausstehende Registrierung, Passkey, `Transaktion`).
+- **Quelle:** ENTSCHEIDUNGEN.md E32, E7, E26.

@@ -1,0 +1,26 @@
+# C-02 – Timer-UI, mobil bedienbar
+
+- **Repo:** client
+- **Status:** umgesetzt und unabhängig nachgeprüft, Merge offen. Branch `task/C-02-timer-ui`, Worktree .worktrees/C-02, Basis 8a828e3, Spitze 88c13f2 (Commits 15a132d, cc63e40, a9d88b0, 4256770, 2730bd7, 94cacd8, 1faa940, 4970d61, 5265902, 88c13f2).
+- **Gebaut:** Timer als Startseite (ersetzt die Beispiel-Komponente); Timer-Logik in `src/timer/logik.ts` (Restzeit aus Zeitstempeln); zentrale Funktion `formatiereDauer` nach E21 mit `aria-label`; Komponenten `NumberField`, `CircularProgress`, `Button` in Größe `large`; Speicherung der Einstellung in `localStorage` (`trainingsapp.timer.einstellung.v1`); keine API-Aufrufe.
+- **Prüfung (Worker und Gutachter unabhängig):** Typprüfung, Lint, beide Builds grün; Vitest 175/175; Playwright 144/144 (chromium, firefox, webkit, mobile je 27; galerie-* je 2; visuell-chromium 28); `npm audit --omit=dev` 0. Referenzbilder 29: 18 unverändert, 2 Startseiten-Bilder ersetzt, 9 neu.
+- **Abweichung (nachträglich genehmigt 18.11.2026 nach unabhängigem Gutachten):** Beispiel-Komponente und 2 Unit-Tests entfernt, 2 E2E-Tests umgestellt, 2 Startseiten-Bilder ersetzt. Gutachter: keine Testaussage verloren. Festgehalten in `docs/abweichungen-c02.md` (Branch).
+- **Offen (Nutzerfrage 15):** Die Commit-Nachrichten 4256770 und 1faa940 nennen eine Abstimmung mit dem Orchestrator, die es so nicht gab. Der Worker gibt an, über das Frage-Werkzeug eine Antwort erhalten zu haben, die nicht vom Orchestrator stammte. Je nach Antwort ist die Richtigstellung in `docs/abweichungen-c02.md` anzupassen.
+- **Annahmen des Workers:** Runden wiederholen sich bis zum Anhalten; kein Ton und keine Vibration beim Phasenwechsel (Nutzerfrage 16); laufender Timer wird nicht gespeichert; Eingabe in Sekunden, Werte außerhalb der Grenzen werden beim Verlassen des Felds auf die Grenze gesetzt; Einstellung während des Laufs gesperrt; kein Routing.
+- **Ungeprüft:** echtes iOS-Safari bei gesperrtem Bildschirm und Wake Lock auf echten Geräten (C-01b); Screenreader und axe; Aussehen außerhalb von Chromium.
+- **Token-Herkunft:** `ButtonLarge` und `CircularProgress` gegen androidx-Commit 1b31f4ddbd0d24677bdfc3e0f097ce5706c2f772 geprüft (Abruf 18.11.2026), Werte stimmen. Übrige Tokens weiter Stand `cea944e`.
+- **C-09:** Der zentrale Dauer-Formatierer mit Grenzwert-Tests (E21) ist mit C-02 vorhanden; bei C-09 als erledigter Teil vermerkt.
+- **Client-Kette (linear):** C-01a -> C-06 -> C-14 -> C-06b -> C-02. Spitze 88c13f2 ist Basis für weitere Client-Tasks.
+- **Ziel:** Benutzer stellen Trainings- und Pausenzeit des Intervalltimers ein und starten den Timer auf dem Smartphone.
+- **Betroffene Dateien/Bereiche:** Timer-Komponenten/Screens, Zeiteingabe, Timer-Logik, API-Anbindung an `/v1` (S-02).
+- **Abnahmekriterien:**
+  - Trainingsphase und Pause sind einstellbar.
+  - Bedienung auf Smartphone-Bildschirmgröße funktioniert.
+  - Funktionstests clientseitig (C-09) decken den Timer ab.
+- **Abhängigkeiten:** C-01a (Grundgerüst). Speichert zunächst lokal. Der Server-Abgleich wartet auf S-02b. Kein Dummy-Endpunkt (E10).
+- **Hinweis:** Zeitberechnung aus Zeitstempeln (E1-Arbeitsannahme); Ergebnis C-01b beachten.
+- **Startbar:** nach Abschluss von C-06b (WebKit/Mobil lauffähig, Nutzerfrage 9 erledigt).
+- **Komponenten (Vorschlag aus C-06):** Zahlenfeld, großer Start-Button bzw. FAB, Fortschrittsanzeige, Segmented Button bzw. Schalter. Auf React Aria mit Token-Paket (C-06).
+- **Anzeige (E21):** Dauer als `mm:ss` bzw. `h:mm:ss` über den zentralen Formatierer (C-09); `aria-label` in Worten.
+- **Standard (E20):** Ohne gespeicherte Einstellung 30 s Training / 10 s Pause.
+- **Quelle:** client/README.md, „Muss-Kriterien“ (Timer, Bedienbar auf dem Smartphone).

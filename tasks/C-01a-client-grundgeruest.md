@@ -1,0 +1,31 @@
+# C-01a – Client-Grundgerüst
+
+- **Status:** umgesetzt, teilweise geprüft, Merge offen. Branch `task/C-01a-client-grundgeruest`, Worktree .worktrees/C-01a, Commits 2f3ec0e, df121c0, 8ba7931, c40f9b0, acf09ae (package-lock.json, Node-Anforderung), 4bb90b4 (README). Client-main unverändert auf 8d39469.
+- **Umgebung:** Node v22.22.1, npm 9.2.0 (vom Nutzer installiert).
+- **Grün:** `npm install` (431 Pakete); Typprüfung TypeScript 7.0.2; Build mit Service Worker und Manifest; Vitest 3/3; Playwright Chromium 6/6 und Firefox 6/6 inkl. Service-Worker-Registrierung.
+- **WebKit und Mobil (Stand e132a66, Nutzer hat libevent-2.1-7t64, libavif16, libmanette-0.2-0 installiert):** Playwright-WebKit und Mobil-Emulation (iPhone 13) starten. Je 9 funktionale Tests (u. a. Startseite, Layout ohne horizontales Scrollen, Manifest, Service Worker ausgeliefert und registriert, keine fremden Hosts, Roboto selbst gehostet, dunkles Schema). Keine inhaltlichen Fehler. `npm run dev` ungeprüft.
+- **Auffälligkeiten:** (a) Node-Anforderung in package.json ist `^22.22.2 || ^24.15.0 || >=26` (wegen jsdom 31). Installiert ist 22.22.1; npm warnt nur. (b) `npm audit`: 14 Lücken (2 moderate, 12 hoch, u. a. glob, minimatch, picomatch), nichts geändert. Siehe C-14.
+- **Offen für die Abnahme:** `npm run dev` prüfen; Node-Anforderung klären (a); `package-lock.json` ist committet.
+- **Als erfüllt gemeldet (ohne Ausführung):** PWA-Manifest und Service Worker über `vite-plugin-pwa`, README ergänzt.
+- **Risiken (Worker):** TypeScript 7 mit der Konfiguration; Service-Worker-Test in Playwright-WebKit.
+- **Annahmen (Worker):** npm; neueste Versionen (TypeScript 7, Vite 8, Vitest 5, vite-plugin-pwa 2, React 19.3); `tsc -p` je Konfiguration; Systemschriften bis C-06; E2E-Test verbietet Anfragen an fremde Hosts; Mobil-Emulation iPhone 13 unter WebKit; E2E gegen `vite preview`; kein Routing, kein State-Management, keine API-Typgenerierung, kein ESLint.
+- **Folgetasks nicht mehr wegen WebKit zurückgehalten** (Nutzerfrage 9 erledigt). Die Client-Features warten nur noch auf den Merge der Vorgänger, C-02 nach Abschluss von C-06b.
+- **Repo:** client (Basis: Branch `main`, Stand unbekannt; Worker prüft `git status` zu Beginn)
+- **Ziel:** Lauffähiges Frontend-Projekt nach E1, das ein Worker ohne Gerät aufsetzen kann.
+- **Umfang:**
+  - React 19 mit TypeScript und Vite.
+  - PWA (Manifest, Service Worker).
+  - Eine Codebasis für Mobil und Desktop (responsives Layout als Grundlage).
+  - React Aria Components als Bedienelementbasis (als Abhängigkeit, eine Beispielkomponente).
+  - Tests: Vitest (Unit) und Playwright mit Projekten für WebKit, Firefox, Chromium und Mobil-Emulation.
+  - Dev-Server und Build laufen; Tests laufen per dokumentiertem Befehl.
+  - Keine fremden CDNs; Schriften und Icons selbst gehostet (E2).
+  - Keine Capacitor-Einrichtung in diesem Task (kommt mit C-11).
+- **Abnahmekriterien:**
+  - `npm run build`, `npm test` (Vitest), Playwright-Lauf in den vier Projekten laufen grün oder die Ausnahmen sind dokumentiert.
+  - PWA-Manifest und Service Worker vorhanden.
+  - Dokumentation im client-README (Befehle, Stack). Der Abschnitt "Frontend-Technik offen" wird aktualisiert.
+- **Abhängigkeiten:** keine.
+- **Blockiert:** C-02 bis C-13 (Client-Features).
+- **Quelle:** ENTSCHEIDUNGEN.md E1, E2; client/README.md.
+- **Hinweis:** Die Client-README-Änderung ist Teil dieses Tasks, nicht der Vorsitz.

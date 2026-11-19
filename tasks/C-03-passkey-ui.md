@@ -1,0 +1,22 @@
+# C-03 – Passkey-Anmeldung, Registrierung und Passkey-Verwaltung (UI)
+
+- **Repo:** client
+- **Status:** in Arbeit, REDUZIERTER Umfang für den Prototyp (Nutzerentscheid J). Branch `task/C-03-passkey-ui`, Worktree .worktrees/C-03, Basis 0b35f4b.
+- **Reduzierter Umfang (Prototyp):** Bereich "Konto" mit Registrieren, Anmelden, Abmelden, Passkey-Liste und "weiteren Passkey hinzufügen". Timer bleibt Startseite und ohne Anmeldung nutzbar. Kein Umbenennen und Löschen, keine Einwilligung, kein PoC-Hinweis (Nutzerentscheid G: kein Registrierungscode). Der Rest von C-03 bleibt offen.
+- **Ziel:** Benutzer registrieren und melden sich per Passkey an und verwalten ihre Passkeys.
+- **Betroffene Dateien/Bereiche:** Auth-Screens, WebAuthn-Browser-Aufrufe, Passkey-Liste (anlegen/löschen), API-Anbindung an S-04.
+- **Abnahmekriterien:**
+  - Registrierung und Anmeldung nur per Passkey, keine andere Methode.
+  - Mehrere Passkeys pro Benutzer anlegbar und verwaltbar.
+  - Funktioniert in Safari, Firefox und Chrome mobil (siehe C-07).
+  - Funktionstests vorhanden (C-09).
+- **Hinweis:** Nach der Registrierung fordert die App aktiv einen zweiten Passkey an (E3).
+- **Abhängigkeiten:** C-01a, S-04. (Passkeys im WebView entfallen mit C-01b-Umfang, Nutzerentscheid 18.11.2026.)
+- **Abnahmepunkt (aus S-04-Spike):** E2E-Test mit virtuellem Authenticator (Chrome/Playwright) für Registrierung, zweiter Passkey, Anmeldung. Echte Browser-JSON-Formate und Plattform-Authenticatoren sind unverifiziert.
+- **Beschluss E2E (E13–E18):** derselbe E2E-Test später gegen die echte PWA (nach S-04).
+- **Hinweis Pseudonym (E17):** Benutzername ist Pseudonym: keine E-Mail, kein Klarname. UI-Hinweis "keine E-Mail, kein Klarname"; Validierung ohne `@`.
+- **Komponenten (Vorschlag aus C-06):** Liste (Passkeys), Dialog (Löschen, Bestätigen), Snackbar (Hinweise). React Aria mit Token-Paket.
+- **E29 Passkey-Liste:** Bezeichnung, erstellt am, zuletzt verwendet am (Datum). Umbenennen über `PATCH /v1/passkeys/{id}` (1 bis 50 Zeichen, Unicode, NFC). Bezeichnung nur als Text, nie als HTML.
+- **E28 Formularhinweis:** Benutzername nur Kleinbuchstaben, Ziffern, `.`, `_`, `-`; 3 bis 32 Zeichen; keine Umlaute, keine Emojis; "keine E-Mail, kein Klarname".
+- **Session (E15):** Sitzung per Cookie; PWA und API unter derselben Origin (Arbeitsannahme, Frage 11). Kein Token in JavaScript.
+- **Quelle:** client/README.md, „Muss-Kriterien“ (Anmeldung/Registrierung mit Passkeys).

@@ -1,0 +1,27 @@
+# S-05 – Autorisierung: RBAC, ABAC, Policy-Service, Prod-Konfiguration
+
+- **Status:** offen
+- **Repo:** server
+- **Ziel:** Rollen und Attribute gemäß E4; Deny-by-default; Objektzugriff über Policy-Service; Prod-Schutz für öffentliche Pfade gemäß E12.
+- **Rollen:** USER und ADMIN. ADMIN nur Betrieb; darf keine fremden Trainingsdaten lesen.
+- **Attribute:** `ownerId`, `sichtbarkeit`, Einladung (`workoutId`, `eingeladenerId`, `status`). `recht` (LESEN/SCHREIBEN) erst mit S-11.
+- **Abnahmekriterien:**
+  - Deny-by-default; jeder Endpunkt außer `/v1/registrieren` und `/v1/anmelden` verlangt Anmeldung.
+  - Jeder Objektzugriff läuft über einen Policy-Service in der Application-Schicht (kein Zugriff direkt im Controller).
+  - Keine externe Policy-Engine.
+  - IDOR-Tests: fremde IDs für Workouts, Timer-Einstellung und Profile werden verweigert.
+  - ADMIN-Tests: ADMIN erhält keinen Zugriff auf fremde Trainingsdaten.
+  - `/v1/info` ist ab hier nur mit Anmeldung erreichbar (E12).
+  - Prod-Profil: `/q/openapi` und Swagger-UI abgeschaltet; `/q/*` nicht erreichbar; Deny-Policy für `/v1/info` bis zur Anmeldepflicht (E12).
+  - Health über Management-Interface auf eigenem Port (E12).
+  - Property-Namen für Quarkus 3.40 verifizieren (`quarkus.smallrye-openapi.enable`, `quarkus.management.enabled`).
+- **Abhängigkeiten:** S-04.
+- **Entschieden (E12, E15, E16):**
+  - 401 als JSON für alle `/v1` ohne Anmeldung, nie 302.
+  - Origin-Prüfung (Allowlist) für alle schreibenden Requests (CSRF-Schutz neben `SameSite=Strict`).
+  - Prod-Profil: `/q/*` und `/.well-known/webauthn` per Route-Filter 404 (E16); `/v1/info` nur mit Anmeldung.
+  - `/v1/info` ohne Anmeldung: 401 als JSON über denselben Mapper wie alle `/v1`-Endpunkte (E25); mit `@Authenticated` ab S-04. Die Deny-Policy für diesen Pfad entfällt.
+  - Pfad-Policy `authenticated` für alle `/v1/*` außer `anmelden*` und `registrieren*`: 401 auch für nicht vorhandene Pfade (E25).
+  - ArchUnit-Regel und 401-Tabelle als Regressionstests in S-07.
+- **Blockiert:** S-02b, S-06, S-11.
+- **Quelle:** ENTSCHEIDUNGEN.md E4, E12; server/README.md, "Muss-Kriterien" (RBAC/ABAC, Authentifizierung).

@@ -1,0 +1,21 @@
+# C-17 – Phasensignale: Ton, Vibration, sichtbares Signal (E33)
+
+- **Status:** offen
+- **Repo:** client
+- **Basis:** Spitze der Client-Kette (aktuell d132c60, bzw. nach C-09 bei Merge).
+- **Ziel:** Der Timer signalisiert Phasenwechsel hörbar, fühlbar und sichtbar.
+- **Umfang:**
+  - Port `PhasenSignal` mit `phaseGewechselt(neuePhase)`; Fake für Tests.
+  - Auslösung: Die 250-ms-Schleife löst pro Übergang genau einmal aus. Nach Rückkehr aus dem Hintergrund wird nur der letzte Wechsel signalisiert; verpasste werden nicht nachgeholt.
+  - Ton: Web Audio mit Sinus-Oszillator, ohne Datei. AudioContext beim Tippen auf "Start" entsperrt. Training: zwei kurze Töne (880 Hz, je 120 ms). Pause: ein Ton (440 Hz, 200 ms). Ende: drei Töne. Hüllkurve gegen Knacken.
+  - Vibration: `navigator.vibrate` mit Feature-Detection. Training `[200]`, Pause `[100,100,100]`, Ende `[300,100,300]`.
+  - Sichtbares Signal immer: Text und Farbe, `aria-live="polite"`.
+  - Einstellung: zwei getrennte Schalter (Ton, Vibration), lokal gespeichert, Standard an. Vibrationsschalter deaktiviert mit Hinweis, wenn der Browser keine Vibration unterstützt.
+- **Abnahmekriterien:**
+  - Vitest für Phasenlogik, Einmaligkeit und Schalter.
+  - Playwright mit gemocktem AudioContext und gemocktem `vibrate`.
+  - Keine Änderung an der Rundenlogik.
+- **Offener Punkt (zu melden, nicht selbst lösen):** Der Beschluss nennt ein Signal für "Ende". Die Timer-UI aus C-02 wiederholt die Runden bis zum Anhalten und kennt kein Ende. Der Worker meldet das, statt eine Rundenzahl einzuführen.
+- **Noch zu verifizieren (C-01b, echtes Gerät):** Ton und Vibration unter iOS-Safari, auch bei gesperrtem Bildschirm und mit Stummschalter.
+- **Abhängigkeiten:** C-02.
+- **Quelle:** ENTSCHEIDUNGEN.md E33; Nutzerantwort 16 (Ton und Vibration beim Phasenwechsel).

@@ -1,0 +1,33 @@
+# S-08 – DSGVO- und EU-Konformität (Server)
+
+- **Status:** offen (offene Fragen 1 und 2 vom Nutzer ausstehend)
+- **Repo:** server
+- **Ziel:** Backend-Umsetzung des DSGVO-Scopes aus E7.
+- **Scope (E7, verbindlich):**
+  - Export als JSON, synchron.
+  - Kontolöschung sofort mit allen abhängigen Daten.
+  - Datenminimierung; Standard-Sichtbarkeit privat.
+  - Logs ohne Personenbezug, 14 Tage aufbewahrt.
+  - Backups verfallen nach 30 Tagen.
+  - TLS und Security-Header; Hosting in der EU.
+  - Kein Tracking, keine Drittdienste.
+  - Verarbeitungsverzeichnis und TOM-Beschreibung (als Dokument in `docs/`).
+  - Restrisiko aus E17 (Aufzählbarkeit von Benutzernamen, Rate-Limit je IP) in den TOM dokumentiert; Benutzernamen als Pseudonyme.
+  - CSP und Cookie-Attribute (E14, E15) dokumentiert.
+  - E29: `zuletzt_verwendet_am` (Tagesdatum, nur bei Anmeldung, höchstens einmal pro Tag) in Datenschutzerklärung, TOM und Verarbeitungsverzeichnis. Keine IP, kein User-Agent, keine Geräte- oder Attestierungsdaten.
+  - E32: Loeschregel (abgelaufene ausstehende Registrierungen; Konten ohne Passkey nach 14 Tagen; inaktive Konten nicht gelöscht) in Datenschutzerklärung und TOM. Umsetzung S-16.
+  - E31: PoC-Hinweis und Freigabeliste (TODO.md, Abschnitt "Freigabe vor öffentlicher Erreichbarkeit") als Teil der Dokumentation; Impressum und Auftragsverarbeitung sind Nutzersache.
+  - E28: Restrisiko Verwechslung von Benutzernamen (l/1/i, o/0) und bewusst akzeptierter Ausschluss von Umlauten und Emojis dokumentieren.
+  - Hinweis (Nutzerentscheid B, 18.11.2026): Daten aus Gesundheitsquellen (z. B. Apple Health, von E7 ausdrücklich genannt) würden die Art.-9-Frage verschärfen. Falls solche Anbindungen später kommen, ist S-08 erneut zu bewerten.
+  - Regel aus E22: Keine Anbindung (Import über `WorkoutImport`) ohne eigene Einwilligung des Benutzers für diese Quelle. Dokumentiert in `docs/erweiterungen.md`.
+  - Ziel WCAG 2.1 AA (betrifft vor allem C-08).
+- **ARBEITSANNAHME (kein Beschluss):** Trainingsdaten gelten vorsorglich als Gesundheitsdaten nach Art. 9. Deshalb ausdrückliche, gesonderte Einwilligung bei der Registrierung (S-04). Widerruf löst Kontolöschung aus. Diese Annahme im Code und in der Dokumentation als Arbeitsannahme kennzeichnen.
+- **Abnahmekriterien:**
+  - Export-Endpunkt (JSON) und Löschendpunkt für das eigene Konto, getestet.
+  - Löschung entfernt alle abhängigen Daten (Workouts, Übungen, Sätze, Timer, Passkeys, Einladungen).
+  - Logs ohne Personenbezug; Aufbewahrung 14 Tage konfiguriert.
+  - Einwilligung bei Registrierung gespeichert.
+  - Verarbeitungsverzeichnis und TOM-Beschreibung in `docs/` vorhanden.
+- **Abhängigkeiten:** S-03, S-04, S-06, S-12.
+- **Quelle:** ENTSCHEIDUNGEN.md E7; server/README.md, "Muss-Kriterien" (DSGVO).
+- **Offen:** Nutzerfragen 1 (Verantwortlicher) und 2 (Art. 9).
