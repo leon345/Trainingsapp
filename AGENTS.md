@@ -6,16 +6,16 @@ Diese Datei übernimmt die bisherigen OpenCode-Regeln (`.opencode/agents/*` und 
 
 ## 1. Projektstruktur & verbindliche Quellen
 
-- Dieser Wurzelordner (`/home/user/trainingsapp`) ist **kein** Git-Repository.
-- `server/` und `client/` sind getrennte Git-Repositories (Hauptbranch `main`):
-  - **Server (`server/`):** Quarkus 3.40 (Java 21, Maven), Layered Architecture / DDD (`domain`, `application`, `infrastructure`, `api.v1`), PostgreSQL + Hibernate Panache + Flyway, OpenAPI unter `/v1`.
-  - **Client (`client/`):** React 19, TypeScript, Vite, PWA (`vite-plugin-pwa`), React Aria Components, eigenes Material-3-Expressive-Token-Paket, Vitest & Playwright.
+- Dieser Wurzelordner (`/home/user/trainingsapp`) ist das Gesamt-Git-Repository (Arbeitsbranch: `gemini`) mit den Git-Submodulen `server/` und `client/` (ebenfalls Arbeitsbranch `gemini`; der frühere OpenCode-Stand liegt unverändert auf `main` bzw. `integration/server`).
+  - **Server (`server/`):** Quarkus 3.40.1.2 (Java 21, Maven), Layered Architecture / DDD (`domain`, `application`, `infrastructure`, `api.v1`), PostgreSQL + Hibernate ORM Panache + Flyway, `quarkus-security-webauthn`, `quarkus-smallrye-fault-tolerance`, OpenAPI unter `/v1`.
+  - **Client (`client/`):** React 19, TypeScript, Vite, PWA (`vite-plugin-pwa`), `@mui/material` mit Material-3-Expressive-Theme (`@material/material-color-utilities`, `@fontsource-variable/roboto`), `react-router`, `openapi-typescript` + `openapi-fetch`, Vitest & Playwright.
 - **Verbindliche Referenzen** (vor jeder Umsetzung prüfen):
-  - `TODO.md` – Gesamtübersicht, Prioritäten, offene Fragen, Git-Stand
-  - `tasks/ENTSCHEIDUNGEN.md` – Verbindliche Beschlüsse (`E1`–`E33`) und Nutzerentscheide (`A`–`J`)
-  - `tasks/<ID>-*.md` – Konkrete Zielbeschreibung und Abnahmekriterien je Task
+  - `TODO.md` – Gesamtübersicht, Wellenplan 1–5, Task-Tabelle (`GS-01`–`GS-05`, `GC-01`–`GC-05`), Git-Stand
+  - `tasks-gemini/ARCHITEKTUR.md` – Verbindliche Gemini-Architektur inkl. übernommener Nutzerentscheide (`A`–`J`) und Standard-Package-Vorgaben
+  - `tasks-gemini/<ID>-*.md` – Konkrete Zielbeschreibung und Abnahmekriterien je Task
+  - `tasks/ENTSCHEIDUNGEN.md` – Historische Beschlüsse (`E1`–`E33`) und Nutzerentscheide (`A`–`J`) als Hintergrundreferenz
   - `server/docs/api-konventionen.md` – Schichten, OpenAPI- und Fehlerformat-Regeln (`FehlerV1`)
-  - `client/docs/design-tokens.md` – Design-Tokens und Komponentenumfang
+  - `client/docs/design-tokens.md` – Material-3-Expressive-Theme und Design-Vorgaben
 
 ---
 
@@ -23,14 +23,15 @@ Diese Datei übernimmt die bisherigen OpenCode-Regeln (`.opencode/agents/*` und 
 
 Übernommen aus `.opencode/agents/AGENTS.md` und den Projektkonventionen:
 
-1. **Keine neuen Abhängigkeiten** ohne vorherige Rückfrage beim Nutzer/Orchestrator.
+0. **Standard-Packages vor Eigenentwicklung (verbindlich):** Für alles außerhalb der eigentlichen Business-Logik (Infrastruktur, Security-Plumbing, Transaktionen, Rate-Limiting, UI-Bibliothek, Routing, API-Client) werden vorrangig offizielle Framework-Bordmittel und Standard-Packages genutzt. Jede geplante Eigenentwicklung außerhalb der Business-Logik **MUSS** vor der Umsetzung dem Nutzer vorgestellt und freigegeben werden.
+1. **Keine ungenehmigten Abhängigkeiten** außerhalb der in `tasks-gemini/ARCHITEKTUR.md` festgelegten Standard-Packages ohne vorherige Rückfrage beim Nutzer/Orchestrator.
 2. **Vor einem neuen Helper per Suche prüfen**, ob es bereits eine passende Funktion im Code gibt.
 3. **Keine Abstraktion für nur einen Aufrufer.**
 4. **Tests prüfen Verhalten, nicht die Implementierung.**
 5. **Abnahmekriterium:** Ein Task gilt erst als fertig, wenn alle zugehörigen Tests/Prüfungen grün sind (und – sofern vorhanden – `scripts/verify/<ID>.sh` Exit 0 liefert).
 6. **Zeitdauern** projektweit als ganze Sekunden (`integer`), Einheit im Feldnamen (`trainingSekunden`, `pauseSekunden`, `dauerSekunden`), kein ISO-8601 (`E11`, `E21`).
-7. **Client-Vorgaben:** Keine fremden CDNs (Schriften und Icons selbst gehostet), kein `@material/web` (`E2`), visuelle Playwright-Tests nur in Chromium (`Nutzerentscheid C`), funktionale E2E-Tests in allen Browser-Projekten gegen den Produktions-Build (`E24`).
-8. **Server-Vorgaben:** Datenbank-Tests sind Pflicht – `-Ddatenbank.tests=aus` darf für Abnahmen nicht genutzt werden (`E19`). Transaktionen nur über Port `application.Transaktion` (`E26`). Keine `io.vertx`-, `io.quarkus.security.webauthn`-, `SecurityIdentity`- oder `jakarta.transaction`-Typen in `domain`, `application`, `api.v1` (`E23`, `E26`).
+7. **Client-Vorgaben:** Keine fremden CDNs (Schriften via `@fontsource-variable/roboto` und Icons via `@mui/icons-material` selbst gehostet), `@mui/material` mit Material-3-Expressive-Theme (kein `@material/web`, kein eigener 12-Komponenten-UI-Bau), `react-router` (`BrowserRouter`), `openapi-typescript` + `openapi-fetch`, visuelle Playwright-Tests nur in Chromium (`Nutzerentscheid C`), funktionale E2E-Tests in allen 4 Browser-Projekten gegen den Produktions-Build (`E24`).
+8. **Server-Vorgaben:** Datenbank-Tests sind Pflicht – `-Ddatenbank.tests=aus` darf für Abnahmen nicht genutzt werden (`E19`). Transaktionen direkt über `@Transactional` (`jakarta.transaction.Transactional`) in `application`. Security-Header über `quarkus.http.header.*`, Rate-Limiting über `@RateLimit` (`quarkus-smallrye-fault-tolerance`), `/q/*`-Schutz über Quarkus-Bordmittel. ArchUnit erzwingt: `domain` 100 % framework-frei; kein JPA, `io.vertx`, `io.quarkus.security.webauthn` oder `SecurityIdentity` in `application` und `api.v1`.
 9. **Kein Scope-Creep:** Zurückgestellte (`C-11`, `C-13`, `C-15`, `S-10`) und abgewählte Wunsch-Tasks (`S-09`, `S-11`, `C-10`, `C-12`, `S-15`) nicht eigenmächtig umsetzen (`Nutzerentscheide A, B, G, I`).
 
 ---
@@ -61,14 +62,14 @@ Diese Datei übernimmt die bisherigen OpenCode-Regeln (`.opencode/agents/*` und 
 - Trifft bei offenen **Architekturentscheidungen** keine Alleingänge: Fragt immer zuerst den Nutzer – und klärt, ob ggf. eine Council-Runde gewünscht ist.
 
 ### Worker (Task-Umsetzung)
-- Setzt **genau einen Task** um.
-- Arbeitet nach dem Worktree-Schema: legt bei Bedarf einen eigenen Worktree unter `.worktrees/<task-id>` an (`git worktree add`) und arbeitet nur dort (sofern der Nutzer keinen anderen Branch-Workflow vorgibt).
+- Setzt **genau einen Task** um (`GS-01`..`GS-05` bzw. `GC-01`..`GC-05`).
+- Arbeitet nach dem Gemini-Worktree-Schema: Basis-Branch ist `gemini`, Feature-Branches heißen `gemini-task/<ID>-<slug>`, Worktrees liegen unter `.worktrees/gemini-<ID>` (`git worktree add`).
 - Committet in kleinen, nachvollziehbaren Schritten.
-- Meldet Unklarheiten an den Orchestrator zurück und trifft keine eigenen Architekturentscheidungen.
+- Meldet Unklarheiten sowie jede geplante Eigenentwicklung außerhalb der Business-Logik vorab an den Orchestrator/Nutzer und trifft keine eigenen Architekturentscheidungen.
 
 ### Todo-Manager
-- Pflegt `TODO.md` und `tasks/*.md` (jeder Task hat ID, Ziel, Abnahmekriterium und Status).
-- Prüft den tatsächlichen Git-Stand beider Repos gegen `TODO.md` und meldet Abweichungen.
+- Pflegt `TODO.md` und `tasks-gemini/*.md` (jeder Task hat ID, Repo, Ziel, Abhängigkeiten, Branch/Worktree, Abnahmekriterien und Status).
+- Prüft den tatsächlichen Git-Stand von Root, `server/` und `client/` gegen `TODO.md` und meldet Abweichungen.
 
 ### Council (nur nach ausdrücklicher Freigabe des Nutzers)
 Hinweis: Laut `Nutzerentscheid H` finden **keine automatischen Council-Runden** statt. Falls der Nutzer ein Council anfordert:
