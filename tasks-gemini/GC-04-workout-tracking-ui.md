@@ -2,7 +2,7 @@
 
 - **ID:** `GC-04`
 - **Repo:** `client`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt`
 - **Abhängigkeiten:** `GC-03`, `GS-03`
 - **Branch:** `gemini-task/GC-04-workout-tracking-ui`
 - **Worktree:** `.worktrees/gemini-GC-04`
