@@ -1,0 +1,6 @@
+apiVersion: v2
+name: trainingsapp
+description: Trainingsapp Gesamt-Chart (Client PWA + Quarkus Server + gemeinsamer Traefik-Ingress)
+type: application
+version: 0.1.0-gemini
+appVersion: "gemini"

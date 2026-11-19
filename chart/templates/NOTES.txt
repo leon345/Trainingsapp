@@ -1,0 +1,12 @@
+Trainingsapp (Client + Server) wurde ausgerollt!
+
+{{- if .Values.ingress.enabled }}
+URL: http{{ if .Values.ingress.tls.enabled }}s{{ end }}://{{ .Values.ingress.host }}
+  - PWA / Frontend: /
+  - API / Backend:  /v1
+  - WebAuthn rpId:  {{ include "trainingsapp.webauthnRpId" . }}
+  - Origins:        {{ include "trainingsapp.webauthnOrigins" . }}
+{{- end }}
+
+Tipp zur Pruefung nach dem Deployment:
+  ./server/scripts/smoke-check.sh https://{{ .Values.ingress.host }}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trainingsapp.fullname" . }}-server
+  labels:
+    app.kubernetes.io/name: trainingsapp-server
+    app.kubernetes.io/component: server
+    {{- include "trainingsapp.commonLabels" . | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: trainingsapp-server
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+    # Nur API-Port 8080 wird ueber den Service veroeffentlicht; Management-Port 9000 bleibt Pod-intern
+    - name: http
+      port: 8080
+      targetPort: http

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trainingsapp.fullname" . }}-client
+  labels:
+    app.kubernetes.io/name: trainingsapp-client
+    app.kubernetes.io/component: client
+    {{- include "trainingsapp.commonLabels" . | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: trainingsapp-client
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

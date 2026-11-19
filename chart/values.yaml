@@ -1,0 +1,50 @@
+imagePullSecrets: []
+
+client:
+  image:
+    repository: ghcr.io/leon345/trainingsapp-client
+    tag: gemini
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 16Mi
+    limits:
+      memory: 64Mi
+
+server:
+  image:
+    repository: ghcr.io/leon345/trainingsapp-server
+    tag: gemini
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  # Optional ueberschreibbar; Standard wird automatisch aus ingress.host abgeleitet
+  webauthn:
+    rpId: ""
+    origins: ""
+  aufraeumenCron: "0 15 3 * * ?"
+  benutzernameSperrliste: "admin,root,system,support,trainingsapp"
+  # Empfohlen fuer Produktion: bestehendes Kubernetes-Secret mit den Schluesseln
+  # DB_URL, DB_USER, DB_PASSWORD und SESSION_ENCRYPTION_KEY (mind. 32 Zeichen)
+  secret:
+    existingSecret: ""
+    dbUrl: ""
+    dbUser: ""
+    dbPassword: ""
+    sessionEncryptionKey: ""
+
+ingress:
+  enabled: true
+  className: traefik
+  host: training.example.de
+  annotations: {}
+  tls:
+    enabled: false
+    secretName: ""
