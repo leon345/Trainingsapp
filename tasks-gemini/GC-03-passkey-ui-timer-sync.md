@@ -2,7 +2,7 @@
 
 - **ID:** `GC-03`
 - **Repo:** `client`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `client` Branch `gemini`, Commit `da1c041`: Vitest 91/91, Playwright 63 bestanden / 2 erwartete CDP-Skips in Firefox/WebKit / 0 fehlgeschlagen, `typecheck` & `lint` 0 Fehler; Fullstack-E2E-Setup `e2e-integration/fullstack.spec.ts` angelegt, Live-Lauf folgt nach Server-Maven-Tasks)
 - **Abhängigkeiten:** `GC-02`, `GS-02`, `GS-03`
 - **Branch:** `gemini-task/GC-03-passkey-ui-timer-sync`
 - **Worktree:** `.worktrees/gemini-GC-03`
