@@ -2,7 +2,7 @@
 
 - **ID:** `GC-02`
 - **Repo:** `client`
-- **Status:** `offen`
+- **Status:** `in Arbeit`
 - **Abhängigkeiten:** `GC-01`
 - **Branch:** `gemini-task/GC-02-timer-phasensignale`
 - **Worktree:** `.worktrees/gemini-GC-02`

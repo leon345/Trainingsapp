@@ -2,7 +2,7 @@
 
 - **ID:** `GC-01`
 - **Repo:** `client`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `client` Branch `gemini`, Commit `68ebe3a`: Vitest 43/43, Playwright 20/20 inkl. 4 Browser + `visuell-chromium`, `typecheck` & `lint` 0 Fehler)
 - **Abhängigkeiten:** keine
 - **Branch:** `gemini-task/GC-01-client-grundgeruest`
 - **Worktree:** `.worktrees/gemini-GC-01`
