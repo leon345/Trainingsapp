@@ -2,7 +2,7 @@
 
 - **ID:** `GC-02`
 - **Repo:** `client`
-- **Status:** `in Arbeit`
+- **Status:** `erledigt` (per Fast-Forward in `client` Branch `gemini`, Commit `6381298`: Vitest 70/70 grün, Playwright 41/41 grün inkl. 4 Browser + 5 `visuell-chromium`-Snapshots, `typecheck` & `lint` 0 Fehler)
 - **Abhängigkeiten:** `GC-01`
 - **Branch:** `gemini-task/GC-02-timer-phasensignale`
 - **Worktree:** `.worktrees/gemini-GC-02`

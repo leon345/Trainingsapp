@@ -23,12 +23,12 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
    - `GC-01` (Client-Grundgerüst, React 19, Vite, PWA, MUI + Material-3-Expressive-Theme, `react-router`, `openapi-typescript`/`openapi-fetch`, Vitest & Playwright) — **`erledigt`** (Fast-Forward in `client` `gemini` `68ebe3a`, Vitest 43/43, Playwright 20/20 inkl. 4 Browser + `visuell-chromium`, `typecheck` & `lint` 0 Fehler)
 2. **Welle 2 – Authentifizierung/RBAC (Server) & Timer/Phasensignale (Client) (parallel):**
    - `GS-02` (Passkeys via `quarkus-security-webauthn`, dünner Auth-Port, RBAC/ABAC mit `@PermissionsAllowed` + `@PermissionChecker`, `@RateLimit`) — **`in Arbeit`** (nach `GS-01`)
-   - `GC-02` (Intervalltimer mit Zeitstempel-Berechnung & Phasensignalen Ton/Vibration/aria-live) — **`in Arbeit`** (nach `GC-01`)
+   - `GC-02` (Intervalltimer mit Zeitstempel-Berechnung & Phasensignalen Ton/Vibration/aria-live) — **`erledigt`** (Fast-Forward in `client` `gemini` `6381298`, Vitest 70/70, Playwright 41/41 inkl. 4 Browser + 5 `visuell-chromium`-Snapshots, `typecheck` & `lint` 0 Fehler)
 3. **Welle 3 – Timer-Sync-API, Workout-Tracking & Import-Port (Server):**
    - `GS-03` (`GET`/`PUT /v1/timer/einstellung`, Kraft- & Calisthenics-Workouts, interner Port `WorkoutImport`) — **`offen`** (nach `GS-02`)
 4. **Welle 4 – Sichtbarkeit/DSGVO/Aufräumjob (Server) & Passkey-UI/Timer-Sync (Client) (parallel):**
    - `GS-04` (Workout-Sichtbarkeit, Einladungen, Profile, DSGVO-Export & -Löschung, `quarkus-scheduler`-Aufräumjob) — **`offen`** (nach `GS-03`)
-   - `GC-03` (Passkey-Registrierung/Anmeldung/Verwaltung & Server-Timer-Sync + Fullstack-E2E) — **`offen`** (nach `GC-02`, `GS-02`, `GS-03`)
+   - `GC-03` (Passkey-Registrierung/Anmeldung/Verwaltung & Server-Timer-Sync + Fullstack-E2E) — **`offen`** (nach `GC-02`, `GS-02`, `GS-03`; wartet auf `GS-02`-Abschluss für echtes Quarkus-OpenAPI-Artefakt)
 5. **Welle 5 – Workout-UI, Sichtbarkeit/DSGVO-UI, Sicherheitstests & Gesamtabnahme:**
    - `GS-05` (Vollständige Security-/IDOR-/ArchUnit-Testsuite, 401/404-Tabellen, DSGVO-/Betriebs-Doku & Smoke-Check) — **`offen`** (nach `GS-04`)
    - `GC-04` (Workout- & Calisthenics-Tracking-UI + Fullstack-E2E) — **`offen`** (nach `GC-03`, `GS-03`)
@@ -46,7 +46,7 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 | `GS-04` | Workout-Sichtbarkeit, Einladungen, DSGVO-Export/Löschung & `quarkus-scheduler`-Aufräumjob | `server` | `offen` | `GS-03` | `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen` / `.worktrees/gemini-GS-04` | [GS-04](tasks-gemini/GS-04-sichtbarkeit-dsgvo-aufraeumen.md) |
 | `GS-05` | Sicherheits-/Härtungstests, ArchUnit-Abnahme, DSGVO-/Betriebsdoku & Smoke-Check | `server` | `offen` | `GS-04` | `gemini-task/GS-05-sicherheitstests-doku` / `.worktrees/gemini-GS-05` | [GS-05](tasks-gemini/GS-05-sicherheitstests-doku.md) |
 | `GC-01` | Client-Grundgerüst (React 19, Vite, PWA, MUI M3 Expressive, `react-router`, `openapi-fetch`, Tests) | `client` | `erledigt` | – | `gemini-task/GC-01-client-grundgeruest` / `.worktrees/gemini-GC-01` (`68ebe3a`, in `gemini`) | [GC-01](tasks-gemini/GC-01-client-grundgeruest-design.md) |
-| `GC-02` | Intervalltimer & Phasensignale (Ton, Vibration, `aria-live`, Zeitstempel) | `client` | `in Arbeit` | `GC-01` | `gemini-task/GC-02-timer-phasensignale` / `.worktrees/gemini-GC-02` | [GC-02](tasks-gemini/GC-02-timer-phasensignale.md) |
+| `GC-02` | Intervalltimer & Phasensignale (Ton, Vibration, `aria-live`, Zeitstempel) | `client` | `erledigt` | `GC-01` | `gemini-task/GC-02-timer-phasensignale` / `.worktrees/gemini-GC-02` (`6381298`, in `gemini`) | [GC-02](tasks-gemini/GC-02-timer-phasensignale.md) |
 | `GC-03` | Passkey-UI, Passkey-Verwaltung & Server-Timer-Sync (+ Fullstack-E2E) | `client` | `offen` | `GC-02`, `GS-02`, `GS-03` | `gemini-task/GC-03-passkey-ui-timer-sync` / `.worktrees/gemini-GC-03` | [GC-03](tasks-gemini/GC-03-passkey-ui-timer-sync.md) |
 | `GC-04` | Workout- & Calisthenics-Tracking-UI (+ Fullstack-E2E) | `client` | `offen` | `GC-03`, `GS-03` | `gemini-task/GC-04-workout-tracking-ui` / `.worktrees/gemini-GC-04` | [GC-04](tasks-gemini/GC-04-workout-tracking-ui.md) |
 | `GC-05` | Sichtbarkeit, Einladungen, Profile, DSGVO-UI, PoC-Hinweis & Gesamtabnahme | `client` | `offen` | `GC-04`, `GS-04` | `gemini-task/GC-05-sichtbarkeit-dsgvo-ui-e2e` / `.worktrees/gemini-GC-05` | [GC-05](tasks-gemini/GC-05-sichtbarkeit-dsgvo-ui-e2e.md) |
@@ -58,16 +58,16 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ## Aktueller Git-Stand (Branch `gemini`)
 
-- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `4d1a700`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
+- **Root (`/home/user/trainingsapp`):** Branch `gemini` (Basis `88b6861`, wird laufend aktualisiert). `main` bleibt auf `9be040d`.
 - **Server (`server/`):**
   - Branch `gemini`: `2667e8e` (`docs: API-Konventionen und Build-/Test-Hinweise ergaenzen` — enthält `GS-01` per Fast-Forward).
   - Worktree `.worktrees/gemini-GS-01`: Branch `gemini-task/GS-01-server-grundgeruest` auf `2667e8e` (`GS-01` erledigt, 15/15 Tests grün inkl. PostgreSQL Dev Services, Flyway V1, ArchUnit 6/6, OpenAPI-Artefakt).
   - Worktree `.worktrees/gemini-GS-02`: Branch `gemini-task/GS-02-passkeys-rbac-abac` auf `2667e8e` (`GS-02` in Arbeit).
   - Altbestand: `main` (`e65d322`), `integration/server` (`9535788`) unverändert.
 - **Client (`client/`):**
-  - Branch `gemini`: `68ebe3a` (`docs: Design-Tokens-Dokumentation und README fuer GC-01 aktualisieren` — enthält `GC-01` per Fast-Forward).
-  - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `68ebe3a` (`GC-01` erledigt, Vitest 43/43, Playwright 20/20 inkl. 4 Browser + `visuell-chromium`, `typecheck` & `lint` 0 Fehler).
-  - Worktree `.worktrees/gemini-GC-02`: Branch `gemini-task/GC-02-timer-phasensignale` auf `68ebe3a` (`GC-02` in Arbeit).
+  - Branch `gemini`: `6381298` (`GC-02: Playwright-E2E-Tests für Timer & Phasensignale sowie aktualisierte Chromium-Snapshots` — enthält `GC-01` und `GC-02` per Fast-Forward).
+  - Worktree `.worktrees/gemini-GC-01`: Branch `gemini-task/GC-01-client-grundgeruest` auf `68ebe3a` (`GC-01` erledigt).
+  - Worktree `.worktrees/gemini-GC-02`: Branch `gemini-task/GC-02-timer-phasensignale` auf `6381298` (`GC-02` erledigt, Vitest 70/70, Playwright 41/41 inkl. 4 Browser + 5 `visuell-chromium`-Snapshots, `typecheck` & `lint` 0 Fehler).
   - Altbestand: `main` (`149134c`) und alte `task/*`-Worktrees unverändert.
 
 ---
