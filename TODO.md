@@ -10,6 +10,27 @@ Status-Werte: `offen`, `in Arbeit`, `umgesetzt und geprüft`, `blockiert`, `erle
 
 ---
 
+## Pause & Wiedereinstieg (Stand 19.11.2026, ~15:15 Uhr)
+
+- **Projekt sauber pausiert** (keine laufenden Hintergrund-Tasks oder aktiven Subagents).
+- **Bereits komplett abgeschlossen & auf `gemini` gemergt (Wellen 1–3, 6 von 10 Tasks = 60 %):**
+  - **Server (`server/` Branch `gemini` @ `ee83330`, 77/77 Tests grün mit PostgreSQL 18 Dev Services):**
+    - `GS-01` (Grundgerüst, DDD/ArchUnit, Flyway V1, OpenAPI, Security-Header-Bordmittel, Management-Health)
+    - `GS-02` (Passkeys via `quarkus-security-webauthn`, dünner Auth-Port `Anmeldesitzung`, RBAC/ABAC mit `@Authenticated`/`@RolesAllowed`/`@PermissionsAllowed` + `@PermissionChecker`, `@RateLimit` via `quarkus-smallrye-fault-tolerance`, `/q/webauthn/*` -> `404`)
+    - `GS-03` (Timer-API `GET/PUT /v1/timer/einstellung`, Kraft- & Calisthenics-Workouts `/v1/workouts` inkl. ABAC/IDOR & optimistischer Sperre `409`, interner Port `WorkoutImport` + `docs/erweiterungen.md`)
+  - **Client (`client/` Branch `gemini` @ `da1c041`, Vitest 91/91 grün, Playwright 63 grün in 4 Browsern + `visuell-chromium`):**
+    - `GC-01` (React 19, Vite, PWA, `@mui/material` mit Material-3-Expressive-Theme, `react-router`, `openapi-typescript`/`openapi-fetch`, Formatierer)
+    - `GC-02` (Zeitstempel-Intervalltimer, Wake Lock, Phasensignale mit Web-Audio-Sinusgenerator & `navigator.vibrate`, getrennte Schalter)
+    - `GC-03` (Passkey-Registrierung/Anmeldung/Verwaltung inkl. 2.-Passkey-Hinweis, Umbenennen, Löschen mit Schutz des letzten Passkeys, Server-Timer-Sync, vorbereitetes `e2e-integration/fullstack.spec.ts`)
+- **Zwischenstand Welle 4 (pausiert wegen Modell-Quota, alle Teilarbeiten in den Worktrees gesichert):**
+  - **`GS-04`** (Worktree `.worktrees/gemini-GS-04`, Branch `gemini-task/GS-04-sichtbarkeit-dsgvo-aufraeumen`): Uncommittete Teilarbeit vorhanden (`V4__einladungen_dsgvo.sql`, `WorkoutEinladung*`-Domäne/Entity/Service/Resource, `benutzer`-Suche, `profil`-Endpunkt). Noch fertigzustellen: DSGVO-Export (`/v1/dsgvo/export`), Kontolöschung (`DELETE /v1/konto`), `quarkus-scheduler`-Aufräumjob und Integrationstests.
+  - **`GC-04`** (Worktree `.worktrees/gemini-GC-04`, Branch `gemini-task/GC-04-workout-tracking-ui`): Commit `4b20e9a` (`GS-03`-OpenAPI-Schema übernommen & Typen generiert) + uncommittete Teilarbeit in `src/workouts/`. Noch fertigzustellen: Workout-UI (`/workouts`, `/workouts/neu`, `/workouts/:id`), Vitest-Tests und Playwright-E2E/Snapshots.
+- **Nächste Schritte beim Wiedereinstieg (`agy -c`):**
+  1. **Welle 4 abschließen:** Worker für `GS-04` (in `.worktrees/gemini-GS-04`) und `GC-04` (in `.worktrees/gemini-GC-04`) fortsetzen und nach Grün auf `gemini` mergen.
+  2. **Welle 5 (`GS-05` ∥ `GC-05`) + Fullstack-E2E:** Security-/IDOR-Matrix & Betriebsdoku (`GS-05`) sowie Sichtbarkeit-/Einladen-/DSGVO-UI (`GC-05`) umsetzen und abschließend `npm run test:e2e:integration` gegen den laufenden Quarkus-Server ausführen.
+
+---
+
 ## Verbindliche Leitregel (19.11.2026)
 
 - **Standard-Packages vor Eigenentwicklung:** Für alles außerhalb der eigentlichen Business-Logik (Infrastruktur, Security-Plumbing, Transaktionen, Rate-Limiting, UI-Bibliothek, Routing, API-Client) werden vorrangig offizielle Framework-Bordmittel und Standard-Packages genutzt. Jede geplante Eigenentwicklung außerhalb der Business-Logik **MUSS** vor der Umsetzung dem Nutzer vorgestellt und freigegeben werden.
